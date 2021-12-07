@@ -2,9 +2,9 @@ const router = require('express').Router();
 const {
 createCustumer,
 
-} = require("../Controllers/custumer.cotroller");
+} = require("../Controllers/custumercotroller");
 
 
-router.post("/custumer", createCustumer);
+router.post("/new-custumer", createCustumer);
 
 module.exports = router;

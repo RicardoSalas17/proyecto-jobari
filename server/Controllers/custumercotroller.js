@@ -5,7 +5,6 @@ exports.createCustumer = async (req, res) => {
         custumername,
         direction
               } = req.body
-
             
               const custumer = await Custumer.create({
                 custumername:custumername,

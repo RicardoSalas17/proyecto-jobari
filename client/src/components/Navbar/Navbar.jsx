@@ -17,6 +17,15 @@ const Navbar = (props) => {
             <Link to={PATHS.PROTECTEDPAGE} className="authLink">
               Protected Page
             </Link>
+            <Link to={PATHS.NEWCUSTUMER} className="authLink">
+              Nuevo cliente
+            </Link>
+            <Link to={PATHS.NEWMP} className="authLink">
+              Nueva MP
+            </Link>
+            <Link to={PATHS.NEWPRODUCT} className="authLink">
+              Nuevo Producto
+            </Link>
             <button className="nav-logoutbtn" onClick={props.handleLogout}>
               Logout
             </button>
@@ -29,6 +38,7 @@ const Navbar = (props) => {
             <Link to={PATHS.LOGINPAGE} className="authLink">
               Log In
             </Link>
+
           </>
         )}
       </div>

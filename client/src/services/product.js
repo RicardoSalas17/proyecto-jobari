@@ -24,12 +24,12 @@ function successStatus(res) {
 
 // creates a basic url for every request in this file
 const custumerService = axios.create({
-  baseURL: `${process.env.REACT_APP_SERVER_URL}/custumer`,
+  baseURL: `${process.env.REACT_APP_SERVER_URL}/product`,
 });
 
-export function regisCustumer(credentials) {
+export function regisProduct(credentials) {
   return custumerService
-    .post("/new-custumer", credentials)
+    .post("/new-product", credentials)
     .then(successStatus)
     .catch(internalServerError);
 }

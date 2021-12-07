@@ -24,12 +24,19 @@ function successStatus(res) {
 
 // creates a basic url for every request in this file
 const custumerService = axios.create({
-  baseURL: `${process.env.REACT_APP_SERVER_URL}/custumer`,
+  baseURL: `${process.env.REACT_APP_SERVER_URL}/mp`,
 });
 
-export function regisCustumer(credentials) {
+export function regisMP(credentials) {
   return custumerService
-    .post("/new-custumer", credentials)
+    .post("/new-mp", credentials)
+    .then(successStatus)
+    .catch(internalServerError);
+}
+
+export function getAllMP() {
+  return custumerService
+    .get("/get-allmp")
     .then(successStatus)
     .catch(internalServerError);
 }

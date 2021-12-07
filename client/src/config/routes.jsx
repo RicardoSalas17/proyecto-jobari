@@ -4,6 +4,8 @@ import Login from "../pages/LogIn";
 import Signup from "../pages/Signup";
 import MapContainer from "../pages/routes"
 import Custumer from "../pages/ CustomerRegistration"
+import NEWMP from "../pages/MpRguistrer"
+import NEWPRODUCT from "../pages/ProductRegistration"
 //import ProtectedPage from "../pages/ProtectedPage";
 import * as PATHS from "../utils/paths";
 import React from 'react'
@@ -29,6 +31,14 @@ const routes = (props) => {
       path: PATHS.NEWCUSTUMER,
       element: <Custumer {...props} />,
     },   
+    {
+      path: PATHS.NEWMP,
+      element: <NEWMP {...props} />,
+    }, 
+    {
+      path: PATHS.NEWPRODUCT,
+      element: <NEWPRODUCT {...props} />,
+    }, 
     {
       path: PATHS.PROTECTEDPAGE,
       element: user ? (
