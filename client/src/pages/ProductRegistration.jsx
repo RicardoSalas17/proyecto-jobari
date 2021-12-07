@@ -8,11 +8,7 @@ import {
   Checkbox,
   Form,
   Input,
-  Select,
-  Tooltip,
-  Button,
-  Space,
-  Typography,
+  Select
 } from "antd";
 
 export default function Custumer({ authenticate }) {
