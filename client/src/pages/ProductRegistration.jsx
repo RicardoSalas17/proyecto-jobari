@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { regisProduct } from "../services/product";
-import { getAllMP } from "../services/mp";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "../utils/paths";
 import * as USER_HELPERS from "../utils/userToken";
-import {
-  Checkbox,
-  Form,
-  Input,
-  Select
-} from "antd";
+import { Checkbox } from "antd";
+import InputMP from "../components/inputMP/inputMP";
+import { getAllMP } from "../services/mp";
+
+import { Form, Input, Select } from "antd";
 
 export default function Custumer({ authenticate }) {
   const [form, setForm] = useState({
@@ -21,8 +19,32 @@ export default function Custumer({ authenticate }) {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const [MPList, setMPList] = useState([]);
+  /*let [MPCounter, setMPCounter] = useState([1]);
+  useEffect(() => {
+    console.log("arr Inicial", MPCounter)
 
+  }, [MPCounter]);*/
+  /*const addMPFun = (event)=>{
+    event.preventDefault();
+    let originalArr = MPCounter
+    let add = 1
+    originalArr.push(add) 
+    setMPCounter(originalArr)
+    console.log("arr final",MPCounter)
+  }*/
+
+  //const [MPList, setMPList] = useState([]);
+
+  /* const obtainProducts = async () => {
+    getAllMP()
+      .then((res) => {
+        setMPList(res.data.MP);
+      })
+      .catch((err) => console.log(err));
+  };
+*/
+
+  const [MPLists, setMPList] = useState([]);
   const obtainProducts = async () => {
     getAllMP()
       .then((res) => {
@@ -30,17 +52,28 @@ export default function Custumer({ authenticate }) {
       })
       .catch((err) => console.log(err));
   };
-
   useEffect(() => {
     obtainProducts();
   }, []);
+
+  const { Option } = Select;
+
+  //function MP(){
+  const [MPList, setMPCounter] = useState([1]);
+
+  const addMP = (todoText) => {
+    const myMP = [...MPList, {}];
+    setMPCounter(myMP);
+  };
+
+  // }
 
   function handleInputChange(event) {
     console.log(event);
     const { name, value } = event.target;
     return setForm({ ...form, [name]: value });
   }
-  const { Option } = Select;
+
   function handleFormSubmission(event) {
     event.preventDefault();
     const credentials = {
@@ -58,6 +91,7 @@ export default function Custumer({ authenticate }) {
       navigate(PATHS.NEWMP);
     });
   }
+  let contador = 1;
 
   const plainOptions = [
     "IR",
@@ -69,14 +103,15 @@ export default function Custumer({ authenticate }) {
   ];
 
   function onChange(checkedValues) {
-    return setForm({ ...form, qualityExams: checkedValues });
+    console.log(checkedValues);
+    //return setForm({ ...form, qualityExams: checkedValues });
   }
 
   return (
     <div>
-      <h1>Nueva MP</h1>
+      <h1>Nuevo Producto</h1>
       <form className="signup__form">
-        <label htmlFor="input-username">Nombre de la materia prima</label>
+        <label htmlFor="input-username">Nombre del producto:</label>
         <input
           id="input-username"
           type="text"
@@ -87,12 +122,12 @@ export default function Custumer({ authenticate }) {
           required
         />
         <br />
-        <label htmlFor="input-username">Clave de la materia prima</label>
+        <label htmlFor="input-username">Clave del producto:</label>
         <input
           id="input-username"
           type="text"
           name="clave"
-          placeholder="Clave de la materia prima"
+          placeholder="Clave"
           value={clave}
           onChange={handleInputChange}
           required
@@ -105,39 +140,49 @@ export default function Custumer({ authenticate }) {
           onChange={onChange}
         />
         <br />
-
-        <label htmlFor="input-password">Pruebas de calidad:</label>
         <Checkbox.Group name="qualityExams" options onChange={onChange} />
         <br />
 
-        <Form
-          name="complex-form"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-        >
-          <Form.Item label="Address">
+        {MPList.map((i) => (
+          <>
+            <br />
             <Input.Group compact>
               <Form.Item
-                name={["address", "province"]}
                 noStyle
                 rules={[{ required: true, message: "Province is required" }]}
+                name="MP"
               >
-                <Select placeholder="Select">
-                  {MPList.map(({ clave }) => (
-                    <Option value={clave}>{clave} </Option>
+                <Select
+                  placeholder="Selecciona MP"
+                  onChange={onChange}
+                  name="MP"
+                  value="2"
+                >
+                  {MPLists.map(({ clave }) => (
+                    <Option key={clave} value={clave}>
+                      {clave}{" "}
+                    </Option>
                   ))}
                 </Select>
               </Form.Item>
               <Form.Item
-                name={["address", "street"]}
+                name={["MP", "porcentaje"]}
                 noStyle
-                rules={[{ required: true, message: "Street is required" }]}
+                rules={[{ required: true, message: "Porcentaje is required" }]}
               >
-                <Input style={{ width: "50%" }} placeholder="Input street" />
+                <Input
+                  style={{ width: "50%" }}
+                  placeholder="Porcentaje"
+                  type="number"
+                />
               </Form.Item>
             </Input.Group>
-          </Form.Item>
-        </Form>
+            <br />
+          </>
+        ))}
+        <button type="danger" onClick={addMP}>
+          Add Mp
+        </button>
 
         {error && (
           <div className="error-block">
