@@ -14,35 +14,13 @@ export default function Custumer({ authenticate }) {
     name: "",
     clave: "",
     qualityExams: [],
+    MP:[{claveMP:1, porcentaje:0}]
   });
-  const { name, clave, qualityExams } = form;
+  const { name, clave, qualityExams,MP,claveMP,porcentaje} = form;
+
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  /*let [MPCounter, setMPCounter] = useState([1]);
-  useEffect(() => {
-    console.log("arr Inicial", MPCounter)
-
-  }, [MPCounter]);*/
-  /*const addMPFun = (event)=>{
-    event.preventDefault();
-    let originalArr = MPCounter
-    let add = 1
-    originalArr.push(add) 
-    setMPCounter(originalArr)
-    console.log("arr final",MPCounter)
-  }*/
-
-  //const [MPList, setMPList] = useState([]);
-
-  /* const obtainProducts = async () => {
-    getAllMP()
-      .then((res) => {
-        setMPList(res.data.MP);
-      })
-      .catch((err) => console.log(err));
-  };
-*/
 
   const [MPLists, setMPList] = useState([]);
   const obtainProducts = async () => {
@@ -55,21 +33,26 @@ export default function Custumer({ authenticate }) {
   useEffect(() => {
     obtainProducts();
   }, []);
-
   const { Option } = Select;
-
-  //function MP(){
   const [MPList, setMPCounter] = useState([1]);
-
-  const addMP = (todoText) => {
+  let [contador, setContador] = useState(0);
+  const addMP = (event) => {
+    event.preventDefault();
+    let add = 1
+    let conterOrg = contador
+    let newCount =conterOrg + add 
+    setContador(newCount)
     const myMP = [...MPList, {}];
     setMPCounter(myMP);
+    let oldArray=form.MP
+    let newData={"claveMP":0, "porcentaje":0}
+    oldArray.push(newData)
+  setForm({ ...form, MP: oldArray })
   };
 
-  // }
+
 
   function handleInputChange(event) {
-    console.log(event);
     const { name, value } = event.target;
     return setForm({ ...form, [name]: value });
   }
@@ -80,6 +63,7 @@ export default function Custumer({ authenticate }) {
       name,
       clave,
       qualityExams,
+      MP,
     };
     console.log("credentials---", credentials);
     regisProduct(credentials).then((res) => {
@@ -89,9 +73,9 @@ export default function Custumer({ authenticate }) {
       USER_HELPERS.setUserToken(res.data.accessToken);
       authenticate(res.data.user);
       navigate(PATHS.NEWMP);
-    });
+   });
   }
-  let contador = 1;
+
 
   const plainOptions = [
     "IR",
@@ -103,8 +87,23 @@ export default function Custumer({ authenticate }) {
   ];
 
   function onChange(checkedValues) {
-    console.log(checkedValues);
-    //return setForm({ ...form, qualityExams: checkedValues });
+    console.log(checkedValues.target);
+    return setForm({ ...form, qualityExams: checkedValues });
+  }
+
+  function onChangeSelect(value,contador){
+   let oldForm=form 
+    oldForm.MP[contador].claveMP = value
+    setForm(oldForm)
+  }
+
+  function onChangeSelectPorc(event,index){
+    event.preventDefault();
+   let oldForm =form 
+   let value =parseFloat(event.target.value)
+    oldForm.MP[contador].porcentaje = value
+   setForm(oldForm)
+   console.log("NEW------>", oldForm)
   }
 
   return (
@@ -143,7 +142,9 @@ export default function Custumer({ authenticate }) {
         <Checkbox.Group name="qualityExams" options onChange={onChange} />
         <br />
 
-        {MPList.map((i) => (
+        {MPList.map((mp,index) =>{ 
+
+        return(
           <>
             <br />
             <Input.Group compact>
@@ -151,12 +152,12 @@ export default function Custumer({ authenticate }) {
                 noStyle
                 rules={[{ required: true, message: "Province is required" }]}
                 name="MP"
+                key={index}
               >
                 <Select
                   placeholder="Selecciona MP"
-                  onChange={onChange}
+                  onChange={(e)=>onChangeSelect(e,index)}
                   name="MP"
-                  value="2"
                 >
                   {MPLists.map(({ clave }) => (
                     <Option key={clave} value={clave}>
@@ -174,13 +175,18 @@ export default function Custumer({ authenticate }) {
                   style={{ width: "50%" }}
                   placeholder="Porcentaje"
                   type="number"
+                  name="Porcentaje"
+                  onChange={(e)=>onChangeSelectPorc(e,index)}
+                  value= {porcentaje}
+                  index={contador}
+
                 />
               </Form.Item>
             </Input.Group>
             <br />
           </>
-        ))}
-        <button type="danger" onClick={addMP}>
+        )})}
+        <button type="danger" onClick={(e)=>addMP(e)}>
           Add Mp
         </button>
 
@@ -191,10 +197,10 @@ export default function Custumer({ authenticate }) {
           </div>
         )}
 
-        <button className="button__submit" type="submit">
+        <button className="button__submit" type="submit" onClick={(e)=>handleFormSubmission(e)}>
           Submit
         </button>
       </form>
     </div>
   );
-}
+}  

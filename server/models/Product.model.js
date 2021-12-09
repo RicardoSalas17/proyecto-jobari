@@ -24,10 +24,9 @@ const productSchema = new Schema(
     qualityExams:{
         type: Array
     },
-    MP:[{
-      type: Schema.Types.ObjectId,
-      ref: "MP.model",
-    }]
+    MP:{
+      type: Array
+    }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
