@@ -12,3 +12,7 @@ exports.createCustumer = async (req, res) => {
               });
               res.status(201).json(custumer)
   };
+  exports.getAllCustumers = async (req, res) => {
+    const Custumers = await Custumer.find()
+    res.status(200).json({Custumers});
+  };

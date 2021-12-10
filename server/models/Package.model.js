@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
 // TODO: Please make sure you edit the user model to whatever makes sense in this case
-const productSchema = new Schema(
+const packageSchema = new Schema(
   {
     name: {
         type: String,
@@ -11,7 +11,7 @@ const productSchema = new Schema(
         type: String,
         unique: true
       },
-    clients:{
+    providers:{
         type: Array
     },
     amountStock:{
@@ -21,11 +21,9 @@ const productSchema = new Schema(
     lotes:{
         type: Array
     },
-    qualityExams:{
-        type: Array
-    },
-    MP:{
-      type: Array
+
+    capacity:{
+        type:Number
     }
   },
   {
@@ -34,6 +32,6 @@ const productSchema = new Schema(
   }
 );
 
-const Product = model("Product", productSchema);
+const Package = model("Package", packageSchema);
 
-module.exports = Product;
+module.exports = Package;
