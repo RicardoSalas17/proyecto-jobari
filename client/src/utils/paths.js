@@ -6,3 +6,4 @@ export const PROTECTEDPAGE = "/protected";
 export const NEWCUSTUMER = "/new-custumer";
 export const NEWMP ="/new-mp";
 export const NEWPRODUCT ="/new-product";
+export const NEWPACKAGE ="/new-package";

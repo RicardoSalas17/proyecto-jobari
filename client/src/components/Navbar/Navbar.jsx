@@ -26,6 +26,9 @@ const Navbar = (props) => {
             <Link to={PATHS.NEWPRODUCT} className="authLink">
               Nuevo Producto
             </Link>
+            <Link to={PATHS.NEWPACKAGE} className="authLink">
+              Nuevo Empaque
+            </Link>
             <button className="nav-logoutbtn" onClick={props.handleLogout}>
               Logout
             </button>

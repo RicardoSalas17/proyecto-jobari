@@ -60,8 +60,8 @@ export default function Custumer({ authenticate }) {
   function handleFormSubmission(event) {
     event.preventDefault();
     const credentials = {
-      name,
-      clave,
+      name:name,
+      clave:clave,
       qualityExams,
       MP,
     };
