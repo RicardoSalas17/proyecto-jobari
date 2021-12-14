@@ -8,6 +8,9 @@ import NEWMP from "../pages/MpRguistrer"
 import NEWPRODUCT from "../pages/ProductRegistration"
 import NEWPACKAGE from "../pages/PackageRegistration"
 import NEWORDER from "../pages/OrderRegistration"
+import SEEALLORDERS from "../pages/OrdersView"
+import SEEALLMP from "../pages/MPView"
+import SEEALLPRODUCTS from "../pages/ProductsView"
 //import ProtectedPage from "../pages/ProtectedPage";
 import * as PATHS from "../utils/paths";
 import React from 'react'
@@ -50,6 +53,18 @@ const routes = (props) => {
     {
       path: PATHS.NEWORDER,
       element: <NEWORDER {...props} />,
+    }, 
+    {
+      path: PATHS.SEEALLORDERS,
+      element: <SEEALLORDERS {...props} />,
+    }, 
+    {
+      path: PATHS.SEEALLMP,
+      element: <SEEALLMP {...props} />,
+    }, 
+    {
+      path: PATHS.SEEALLPRODUCTS,
+      element: <SEEALLPRODUCTS {...props} />,
     }, 
     
     {

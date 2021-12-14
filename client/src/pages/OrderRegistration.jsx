@@ -156,9 +156,9 @@ export default function Oder({ authenticate }) {
         <label htmlFor="input-username">Numero de Orden:</label>
         <input
           id="input-username"
-          type="text"
+          type="number"
           name="orderNumber"
-          placeholder="Nombre"
+          placeholder="Numero de orden"
           value={orderNumber}
           onChange={handleInputChange}
           required/>

@@ -8,3 +8,6 @@ export const NEWMP ="/new-mp";
 export const NEWPRODUCT ="/new-product";
 export const NEWPACKAGE ="/new-package";
 export const NEWORDER ="/new-order";
+export const SEEALLORDERS ="/get-allorders";
+export const SEEALLMP="/get-allmp";
+export const SEEALLPRODUCTS="/get-products";
