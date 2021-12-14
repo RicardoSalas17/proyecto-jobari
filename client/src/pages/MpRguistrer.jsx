@@ -23,7 +23,7 @@ return setForm({ ...form, [name]: value });
   }
 
   function handleFormSubmission(event) {
-    event.preventDefault();
+  //  event.preventDefault();
     const credentials = {
         name,
       clave,

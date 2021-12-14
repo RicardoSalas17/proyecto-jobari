@@ -33,4 +33,10 @@ export function regisPackage(credentials) {
     .then(successStatus)
     .catch(internalServerError);
 }
+export function getAllPackages() {
+  return packageServices
+    .get("/get-allpackages")
+    .then(successStatus)
+    .catch(internalServerError);
+}
 

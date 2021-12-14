@@ -58,7 +58,7 @@ export default function Custumer({ authenticate }) {
   }
 
   function handleFormSubmission(event) {
-    event.preventDefault();
+   // event.preventDefault();
     const credentials = {
       name:name,
       clave:clave,

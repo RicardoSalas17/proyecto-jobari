@@ -33,4 +33,10 @@ export function regisProduct(credentials) {
     .then(successStatus)
     .catch(internalServerError);
 }
+export function getAllProducts() {
+  return custumerService
+    .get("/get-products")
+    .then(successStatus)
+    .catch(internalServerError);
+}
 
