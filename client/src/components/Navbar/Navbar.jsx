@@ -41,6 +41,9 @@ const Navbar = (props) => {
             <Link to={PATHS.SEEALLPRODUCTS} className="authLink">
               Productos
             </Link>
+            <Link to={PATHS.SEEALLPACKAGES} className="authLink">
+              Empaques
+            </Link>
             <button className="nav-logoutbtn" onClick={props.handleLogout}>
               Logout
             </button>

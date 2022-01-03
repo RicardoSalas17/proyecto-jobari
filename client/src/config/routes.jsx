@@ -11,6 +11,7 @@ import NEWORDER from "../pages/OrderRegistration"
 import SEEALLORDERS from "../pages/OrdersView"
 import SEEALLMP from "../pages/MPView"
 import SEEALLPRODUCTS from "../pages/ProductsView"
+import SEEALLPACKAGES from "../pages/PackagesView"
 //import ProtectedPage from "../pages/ProtectedPage";
 import * as PATHS from "../utils/paths";
 import React from 'react'
@@ -65,6 +66,10 @@ const routes = (props) => {
     {
       path: PATHS.SEEALLPRODUCTS,
       element: <SEEALLPRODUCTS {...props} />,
+    }, 
+    {
+      path: PATHS.SEEALLPACKAGES,
+      element: <SEEALLPACKAGES {...props} />,
     }, 
     
     {

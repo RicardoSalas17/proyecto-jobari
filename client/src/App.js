@@ -51,6 +51,7 @@ export default function App() {
   if (isLoading) {
     return <LoadingComponent />;
   }
+
   return (
     <div className="App">
       <Navbar handleLogout={handleLogout} user={user} />
