@@ -44,6 +44,8 @@ export function Custumer(props, { authenticate }) {
 
 
   useEffect(() => {
+
+
    initMap()
   }, []);
 
@@ -57,17 +59,21 @@ export function Custumer(props, { authenticate }) {
       'postal_code',
     ];
 
-   const map = new window.google.maps.Map(document.getElementsByClassName("maps"), {
-      zoom: 11,
+
+    const map =  new props.google.maps.Map(document.getElementById("mapas"), {
+
+      zoom: 1001,
       center: { lat: 37.4221, lng: -122.0841 },
       mapTypeControl: false,
       fullscreenControl: true,
       zoomControl: true,
       streetViewControl: true
     });
-    const marker = new window.google.maps.Marker({map: map, draggable: false});
+
+
+    const marker = new props.google.maps.Marker({map: map, draggable: false});
     const autocompleteInput = document.getElementById('location');
-    const autocomplete = new window.google.maps.places.Autocomplete(autocompleteInput, {
+    const autocomplete = new props.google.maps.places.Autocomplete(autocompleteInput, {
       fields: ["address_components", "geometry", "name"],
       types: ["address"],
     });
@@ -112,6 +118,9 @@ export function Custumer(props, { authenticate }) {
     }
   
     function renderAddress(place) {
+      console.log("map",map)
+      console.log("place", place)
+
       map.setCenter(place.geometry.location);
       marker.setPosition(place.geometry.location);
       marker.setVisible(true);
@@ -125,9 +134,6 @@ export function Custumer(props, { authenticate }) {
       <div className="containers">
       <div className="form-container">
       <form onSubmit={handleFormSubmission} className="signup__form">
-<>
-    <div className="card-container">
-      <div className="panel">
         <input
           id="input-username"
           type="text"
@@ -137,6 +143,9 @@ export function Custumer(props, { authenticate }) {
           onChange={handleInputChange}
           required
         />
+<>
+    <div className="card-container">
+      <div className="panel">
         <input className="signup__form" type="text" placeholder="Address" id="location"/>
         <input className="signup__form" type="text" placeholder="Apt, Suite, etc (optional)"/>
         <input className="signup__form" type="text" placeholder="City" id="locality"/>
@@ -147,7 +156,7 @@ export function Custumer(props, { authenticate }) {
         <input className="signup__form" type="text" placeholder="Country" id="country"/>
       </div>
     </div>
-      <div className="map" id="map"></div>
+ 
 </>
         <button className="button__submit" type="submit">
           Submit
@@ -161,20 +170,13 @@ export function Custumer(props, { authenticate }) {
       </form>
       </div>
       <div className="maps-conainter">
-      <Map id="maps"className="mapform" google={props.google} zoom={14} initialCenter={{
-        lat: 19.478270560890298,
-        lng: -99.23066874058068
-      }}>
-        <Marker className="markes" onClick={props.onMarkerClick}
-                name={'Current location'} />
-        <InfoWindow onClose={props.onInfoWindowClose}>
-            <div>
-              <h1>{{ lat:19.478270560890298, lng:-99.23066874058068}}</h1>
-            </div>
-        </InfoWindow>
-      </Map>
+
+
       </div>
       </div>
+
+      <div id="mapas" className="mapas"></div>
+
     </div>
   );
 }
