@@ -10,7 +10,7 @@ import PlacesAutocomplete, {
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import { Helmet } from 'react-helmet';
 
-export default function Custumer({ authenticate }) {
+export function Custumer(props, { authenticate }) {
 
   const [form, setForm] = useState({
     custumername: "",
@@ -49,12 +49,6 @@ export default function Custumer({ authenticate }) {
 
 
   function initMap() {
-
-  const googleMapScript = document.createElement('script');
-  googleMapScript.src=`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_MAP_KEY}&libraries=places&callback=initMap`;
-  googleMapScript.async = true;
-  window.document.body.appendChild(googleMapScript);
-
     const componentForm = [
       'location',
       'locality',
@@ -63,7 +57,7 @@ export default function Custumer({ authenticate }) {
       'postal_code',
     ];
 
-   const map = new window.google.maps.Map(document.getElementById("map"), {
+   const map = new window.google.maps.Map(document.getElementsByClassName("maps"), {
       zoom: 11,
       center: { lat: 37.4221, lng: -122.0841 },
       mapTypeControl: false,
@@ -124,18 +118,16 @@ export default function Custumer({ authenticate }) {
     }
   }
 
-
-
-
   
-  return (
-
-      
-    <div id="divs">
-      
+  return (      
+    <div id="divs">     
       <h1>Nuevo Cliente</h1>
+      <div className="containers">
+      <div className="form-container">
       <form onSubmit={handleFormSubmission} className="signup__form">
-        <label htmlFor="input-username">Nombre del cliente</label>
+<>
+    <div className="card-container">
+      <div className="panel">
         <input
           id="input-username"
           type="text"
@@ -145,50 +137,47 @@ export default function Custumer({ authenticate }) {
           onChange={handleInputChange}
           required
         />
-
-
-<>
-    <div className="card-container">
-      <div className="panel">
-        <div>
-          <img className="sb-title-icon" src="https://fonts.gstatic.com/s/i/googlematerialicons/location_pin/v5/24px.svg" alt=""/>
-          <span className="sb-title">Address Selection</span>
-        </div>
-        <input type="text" placeholder="Address" id="location"/>
-        <input type="text" placeholder="Apt, Suite, etc (optional)"/>
-        <input type="text" placeholder="City" id="locality"/>
+        <input className="signup__form" type="text" placeholder="Address" id="location"/>
+        <input className="signup__form" type="text" placeholder="Apt, Suite, etc (optional)"/>
+        <input className="signup__form" type="text" placeholder="City" id="locality"/>
         <div className="half-input-container">
-          <input type="text" className="half-input" placeholder="State/Province" id="administrative_area_level_1"/>
-          <input type="text" className="half-input" placeholder="Zip/Postal code" id="postal_code"/>
+          <input className="signup__form" type="text" className="half-input" placeholder="State/Province" id="administrative_area_level_1"/>
+          <input className="signup__form" type="text" className="half-input" placeholder="Zip/Postal code" id="postal_code"/>
         </div>
-        <input type="text" placeholder="Country" id="country"/>
-        <button className="button-cta">Checkout</button>
+        <input className="signup__form" type="text" placeholder="Country" id="country"/>
       </div>
     </div>
-   
-
       <div className="map" id="map"></div>
-
-
 </>
-
-
-
-
+        <button className="button__submit" type="submit">
+          Submit
+        </button>
         {error && (
           <div className="error-block">
             <p>There was an error submiting the form:</p>
             <p>{error.message}</p>
           </div>
         )}
-
-        <button className="button__submit" type="submit">
-          Submit
-        </button>
       </form>
-     
+      </div>
+      <div className="maps-conainter">
+      <Map id="maps"className="mapform" google={props.google} zoom={14} initialCenter={{
+        lat: 19.478270560890298,
+        lng: -99.23066874058068
+      }}>
+        <Marker className="markes" onClick={props.onMarkerClick}
+                name={'Current location'} />
+        <InfoWindow onClose={props.onInfoWindowClose}>
+            <div>
+              <h1>{{ lat:19.478270560890298, lng:-99.23066874058068}}</h1>
+            </div>
+        </InfoWindow>
+      </Map>
+      </div>
+      </div>
     </div>
-
-
   );
 }
+export default GoogleApiWrapper({
+  apiKey: (process.env.REACT_APP_MAP_KEY)
+})(Custumer)
