@@ -9,7 +9,7 @@ import { Card, Col, Row } from 'antd';
 
 
 
-export default function SEEALLORDERS({ authenticate }) {
+export default function SEEALLCLIENTS({ authenticate }) {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const [orderList, setOrderList] = useState([]);
