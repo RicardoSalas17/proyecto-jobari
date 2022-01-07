@@ -8,7 +8,8 @@ const orderSchema = new Schema(
         unique: true
       },
     client:{
-        type: String
+      type: Schema.Types.ObjectId,
+      ref: "Custumer"
     },
     product:{
         type: Array

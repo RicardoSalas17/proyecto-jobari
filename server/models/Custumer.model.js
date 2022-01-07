@@ -8,8 +8,14 @@ const custumerSchema = new Schema(
       unique: true,
 
     },
+    phone:{
+      type:String
+    },
+    email:{
+      type:String
+    },
     direction: {
-        type: String,
+        type: Object,
       },
     products:{
         type: Array

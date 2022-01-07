@@ -17,7 +17,9 @@ export default function SEEALLORDERS({ authenticate }) {
   const getALLORDERS = async () => {
     getAllOrders()
       .then((res) => {
-        setOrderList(res.data.ORDERS);
+        const order =res.data.ORDERS
+       // console.log(order)
+        setOrderList(order);
       })
       .catch((err) => console.log(err));
   };
@@ -27,52 +29,24 @@ export default function SEEALLORDERS({ authenticate }) {
 
         return(
 <div className="site-card-wrapper">
-    <h2>Activas:</h2>
 <Row gutter={16}>
   <Col span={8}>
-  {orderList.map((order,indx) => 
-  order.status==="open"?
-   <Col span={30} key={indx}>                
-                  <Card title={order.orderNumber} bordered={true}>
-                      <p>Cliente:{order.client}</p>
-                Productos:
-                {order.product.map((product,indx) =>  
+  {
 
-                   <p key={indx}>{product.claveProduct}</p>
-                )
-                }                
-                </Card>
-                <br />
-                  </Col>
-                  :
-                  <h2>Vacio</h2>
-                )
-            }
-  </Col>
-</Row>
+  orderList===[] ? <div>CARGANDO</div>:
 
-<h2>Terminadas:</h2>
-<Row gutter={16}>
-  <Col span={8}>
-  {orderList.map((order,indx) => 
-  order.status==="close"?
-   <Col span={30} key={indx}>                
-                  <Card title={order.orderNumber} bordered={true}>
-                      <p>Cliente:{order.client}</p>
-                      <p>Status: {order.status}</p>
-                Productos:
-                {order.product.map((product,indx) =>  
+  orderList.map((order,indx) =>
 
-                   <p key={indx}>{product.claveProduct}</p>
-                )
-                }                
-                </Card>
-                <br />
-                  </Col>
-                  :
-                  <h2>Vacio</h2>
-                )
-            }
+  console.log("close",order.status)
+
+
+  
+
+
+                  )
+  
+
+  }
   </Col>
 </Row>
 </div>            

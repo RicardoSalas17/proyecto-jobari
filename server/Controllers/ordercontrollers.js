@@ -22,5 +22,8 @@ exports.createOrder = async (req, res) => {
 
   exports.getAllOrders = async (req, res) => {
     const ORDERS = await Order.find()
+    .populate({
+      path:"client"})
+      
     res.status(200).json({ ORDERS });
   };

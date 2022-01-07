@@ -162,7 +162,7 @@ export default function Oder({ authenticate }) {
           value={orderNumber}
           onChange={handleInputChange}
           required/>
-                      <br />
+
                       <br />
                   <Form.Item
                 noStyle
@@ -176,7 +176,7 @@ export default function Oder({ authenticate }) {
                   name=""
                 >
                   {clientLists.map((client,indx) =>                    
-                        <Option key={indx} value={client.custumername}>
+                        <Option key={indx} value={client._id}>
                         {client.custumername}
                       </Option>
                   )}
