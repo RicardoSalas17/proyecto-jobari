@@ -41,3 +41,9 @@ export function getAllOrders() {
     .catch(internalServerError);
 }
 
+export function getOrder(id) {
+  return orderService
+    .get(`/order-detail/${id}`)
+    .then(successStatus)
+    .catch(internalServerError);
+}

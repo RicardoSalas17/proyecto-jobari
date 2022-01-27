@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { regisOrder } from "../services/order";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import * as PATHS from "../utils/paths";
 import * as USER_HELPERS from "../utils/userToken";
 import { getAllOrders } from "../services/order";
@@ -45,6 +45,7 @@ export default function SEEALLORDERS({ authenticate }) {
     </div>
     )}
     <h5>{order.status}</h5>
+    <Link className="event-button" exact to={`/order/${order._id}`} type="button" >{order.orderNumber}</Link>
   </Card>
                   )
   }

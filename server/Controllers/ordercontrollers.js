@@ -27,3 +27,18 @@ exports.createOrder = async (req, res) => {
       
     res.status(200).json({ ORDERS });
   };
+
+  exports.getOrder = async (req, res) => {
+    const { id } = req.params;
+   // console.log(id)
+    const order = await Order.findById(id).populate("client")
+    /* const match = await Match.findById(id).populate("owner").populate("players").populate("teams")
+    .populate({
+    path:"comments",
+    populate:{ 
+    path: "owner",
+    model:"User",
+    }})*/
+    
+    res.status(200).json(order);
+  };
