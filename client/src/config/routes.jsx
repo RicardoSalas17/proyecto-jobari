@@ -13,6 +13,10 @@ import SEEALLMP from "../pages/MPView"
 import SEEALLPRODUCTS from "../pages/ProductsView"
 import SEEALLPACKAGES from "../pages/PackagesView"
 import SEEORDERDETAIL from "../pages/OrderDetail"
+import SEEPRODUCTDETAIL from "../pages/ProductDetail"
+import SEECALENDAR from "../pages/CalendarView"
+import NEWROUTE from "../pages/RouteRegistreation"
+
 //import ProtectedPage from "../pages/ProtectedPage";
 import * as PATHS from "../utils/paths";
 import React from 'react'
@@ -75,6 +79,18 @@ const routes = (props) => {
     {
       path: PATHS.SEEORDERDETAIL,
       element: <SEEORDERDETAIL {...props} />,
+    },
+    {
+      path: PATHS.SEEPRODUCTDETAIL,
+      element: <SEEPRODUCTDETAIL {...props} />,
+    },
+    {
+      path: PATHS.SEECALENDAR,
+      element: <SEECALENDAR {...props} />,
+    },
+    {
+      path: PATHS.NEWROUTE,
+      element: <NEWROUTE {...props} />,
     },
     {
       path: PATHS.PROTECTEDPAGE,

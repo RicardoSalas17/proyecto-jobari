@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAllProducts } from "../services/product";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link} from "react-router-dom";
 import * as PATHS from "../utils/paths";
 import * as USER_HELPERS from "../utils/userToken";
 import { getAllOrders } from "../services/mp";
@@ -41,6 +41,7 @@ export default function SEEALLPRODUCTS({ authenticate }) {
                         <p key={idex}>{mp.claveMP}</p>
                         )
                         }
+                        <Link className="event-button" exact to={`/product/${product._id}`} type="button" >Detalle</Link>
                 </Card>
                 <br />
                   </Col>

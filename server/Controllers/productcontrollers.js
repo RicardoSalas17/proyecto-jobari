@@ -22,3 +22,9 @@ exports.createProduct = async (req, res) => {
     const AllProducts = await Products.find()
     res.status(200).json({ AllProducts });
   };
+
+  exports.getProduct = async (req, res) => {
+    const { id } = req.params;
+    const product = await Products.findById(id)
+   res.status(200).json(product);
+  };

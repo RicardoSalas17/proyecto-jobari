@@ -45,7 +45,7 @@ export default function SEEALLORDERS({ authenticate }) {
     </div>
     )}
     <h5>{order.status}</h5>
-    <Link className="event-button" exact to={`/order/${order._id}`} type="button" >{order.orderNumber}</Link>
+    <Link className="event-button" exact to={`/order/${order._id}`} type="button" >Detalle de orden</Link>
   </Card>
                   )
   }

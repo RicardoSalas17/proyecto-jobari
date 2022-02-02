@@ -13,3 +13,6 @@ export const SEEALLMP="/get-allmp";
 export const SEEALLPRODUCTS="/get-products";
 export const SEEALLPACKAGES="/get-allpackages";
 export const SEEORDERDETAIL="/order/:id";
+export const SEEPRODUCTDETAIL="/product/:id";
+export const SEECALENDAR="/dates";
+export const NEWROUTE="/new-route";

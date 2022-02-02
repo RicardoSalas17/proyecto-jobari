@@ -44,6 +44,9 @@ const Navbar = (props) => {
             <Link to={PATHS.SEEALLPACKAGES} className="authLink">
               Empaques
             </Link>
+            <Link to={PATHS.SEECALENDAR} className="authLink">
+            Calendario
+          </Link>
             <button className="nav-logoutbtn" onClick={props.handleLogout}>
               Logout
             </button>
