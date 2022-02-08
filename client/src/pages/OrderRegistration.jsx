@@ -108,14 +108,14 @@ export default function Oder({ authenticate }) {
       client:client,
       product:product,
     };
-    console.log("credentials---", credentials);
+   // console.log("credentials---", credentials);
     regisOrder(credentials).then((res) => {
       if (!res.status) {
         return setError({ message: "Invalid credentials" });
       }
       USER_HELPERS.setUserToken(res.data.accessToken);
       authenticate(res.data.user);
-      navigate(PATHS.NEWORDER);
+      navigate(PATHS.SEECALENDAR);
    });
   }
 
@@ -142,7 +142,7 @@ export default function Oder({ authenticate }) {
     name === "monto" ? newArray[index].monto=value:
     
     name === "amount" ? newArray[index].amount=value:
-    console.log("hola")
+   // console.log("hola")
 
     console.log("newwwwsasasaaswarrarrrr",newArray)
 

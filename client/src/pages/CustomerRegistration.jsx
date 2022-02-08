@@ -9,7 +9,7 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import { regisCustumer } from "../services/custumer";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "../utils/paths";
-//import * as USER_HELPERS from "../utils/userToken";
+import * as USER_HELPERS from "../utils/userToken";
 
 export function MapContainer(props) {
   const [form, setForm] = useState({
@@ -31,7 +31,8 @@ export function MapContainer(props) {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   function handleFormSubmission(event) {
-  //  event.preventDefault()
+   // event.preventDefault()
+   // console.log(event)
     const {authenticate} = props
     const credentials = {
       custumername:custumername,
@@ -44,13 +45,9 @@ export function MapContainer(props) {
       if (!res.status) {
         return setError({ message: "Invalid credentials" });
       }    
+      USER_HELPERS.setUserToken(res.data.accessToken);
       authenticate(res.data.user);
-      navigate(PATHS.HOMEPAGE);
-      setForm ({
-        custumername: "",
-        phone: "",
-        email:"",
-        direction:""})
+      navigate(PATHS.SEEALLPRODUCTS);
    });
   }
 
@@ -59,9 +56,8 @@ export function MapContainer(props) {
 return   setForm({ ...form, [name]: value });
   }
   const [mapDirection, setMapDirection] = useState({
-      lat:19.478270560890298,
-       lng:-99.23066874058068
-
+    lat:19.47822,
+    lng:-99.230599
   });
 
   useEffect(() => {
@@ -203,10 +199,10 @@ return   setForm({ ...form, [name]: value });
           <br />
             <input type="text" placeholder="Pais" id="country" />
           <br />
-            <button className="button-cta"
-            onClick={(e)=>handleFormSubmission(e)}>
-              Checkout
-              </button>
+
+        <button className="button__submit" type="submit" onClick={(e)=>handleFormSubmission(e)}>
+          Submit
+        </button>
           </div>
 
         <div className="map-container">

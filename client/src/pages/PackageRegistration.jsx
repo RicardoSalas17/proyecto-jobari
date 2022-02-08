@@ -22,13 +22,14 @@ return setForm({ ...form, [name]: value });
   }
 
   function handleFormSubmission(event) {
-    //event.preventDefault();
+  //  event.preventDefault();
     const credentials = {
         name,
       clave,
       capacity,
     };
     console.log("credentials---",credentials)
+    //console.log("authenticate---", authenticate);
     regisPackage(credentials).then((res) => {
       if (!res.status) {
         return setError({ message: "Invalid credentials" });
@@ -43,7 +44,7 @@ return setForm({ ...form, [name]: value });
     <div>
       <h1>Nuevo Empaque</h1>
       <form onSubmit={handleFormSubmission} className="signup__form">
-      <label htmlFor="input-username">Nombre de la materia prima</label>
+      <label htmlFor="input-username">Nombre del empaque</label>
         <input
           id="input-username"
           type="text"
@@ -53,7 +54,7 @@ return setForm({ ...form, [name]: value });
           onChange={handleInputChange}
           required
         />
-        <label htmlFor="input-username">Clave de la materia prima</label>
+        <label htmlFor="input-username">Clave del empaque</label>
         <input
           id="input-username"
           type="text"
@@ -64,7 +65,7 @@ return setForm({ ...form, [name]: value });
           required
         />
         <br />
-        <label htmlFor="input-username">Capacidad de empaque</label>
+        <label htmlFor="input-username">Capacidad del empaque</label>
         <input
           id="input-username"
           type="number"

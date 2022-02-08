@@ -4,15 +4,17 @@ const { Schema, model } = require("mongoose");
 const routeSchema = new Schema(
   {
       orderNumbers:{
-      type: Schema.Types.ObjectId,
-      ref: "Custumer"
+     type: Array,
     },
     date:{
-        type: String
+        type: String,
+        unique: true
     },
-    dates:{
-        type: String
-    }
+    clients: [    {
+      type: Schema.ObjectId,
+     // require: true,
+      ref: "Custumer"
+  }]
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

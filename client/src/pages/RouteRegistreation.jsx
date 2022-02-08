@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { regisOrder } from "../services/order";
+import { regisRoute } from "../services/routes";
 import { useNavigate } from "react-router-dom";
 import * as PATHS from "../utils/paths";
 import * as USER_HELPERS from "../utils/userToken";
@@ -9,13 +9,15 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
 
 export function NEWROUTE(props) {
-  
   const [form, setForm] = useState({
-    orderNumber: [0],
+    orderNumber: [{
+      lat:19.47822,
+      lng:-99.230599
+    }],
     date: "",
-    dates:""
+    clients:[0]
   });
-  const { orderNumber, date,dates} = form;
+  const { orderNumber, date, clients} = form;
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -35,64 +37,24 @@ export function NEWROUTE(props) {
 
   const { Option } = Select;
   function handleFormSubmission(event) {
-    //event.preventDefault();
-    console.log(form)
+       // event.preventDefault()
     const {authenticate} = props
-    /*const credentials = {
+    const credentials = {
       orderNumber:orderNumber,
       date:date,
-      dates:dates,
+      clients:clients
     };
     console.log("credentials---", credentials);
-    regisOrder(credentials).then((res) => {
+   regisRoute(credentials).then((res) => {
       if (!res.status) {
         return setError({ message: "Invalid credentials" });
       }
       USER_HELPERS.setUserToken(res.data.accessToken);
       authenticate(res.data.user);
-      navigate(PATHS.NEWORDER);
-   });*/
+      navigate(PATHS.SEECALENDAR);
+   });
   }
 
-  function onChangeSelectPorc(event,index){
-
-    /*
-      let name =event.target.name
-      let value =""
-      let oldArray=form.product
-      let newArray=form.product
-      if(name == "claveProduct" || name ==  "package" ){
-       value = event.target.value
-      }
-      else{
-        value =parseFloat(event.target.value)
-      }
-
-    name === "claveProduct" ? newArray[index].claveProduct=value:
-
-    name === "package" ? newArray[index].package=value:
-
-
-    name === "monto" ? newArray[index].monto=value:
-    
-    name === "amount" ? newArray[index].amount=value:
-    console.log("hola")
-
-    console.log("newwwwsasasaaswarrarrrr",newArray)
-
-    return setForm({ ...form,product:newArray });*/
-  }
-
-  const formItemLayout = {
-    labelCol: {
-      xs: { span: 24 },
-      sm: { span: 8 },
-    },
-    wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 16 },
-    },
-  };
 
 const addOrder =(event)=>{
   event.preventDefault()
@@ -107,129 +69,129 @@ const addOrder =(event)=>{
     
  //console.log("new",form)
 }
+const [routeMap, setrouteMap] = useState([{
+  lat:19.47822,
+  lng:-99.230599
+}]);
 
 const onChangeSelectOrder=(ev, indx)=>{
-  //console.log("ev",ev.target.value)
-  //console.log("indx",indx)
 let oldForm = form
-oldForm.orderNumber[indx]={
+let idx = indx
+oldForm.orderNumber[ indx++]={
   lat:ev.target.value[0],
    lng:ev.target.value[1]
 }
- 
- setForm(oldForm)
- //console.log(form)
+ let oldArr =routeMap
+ oldArr[indx++]={
+  lat:ev.target.value[0],
+   lng:ev.target.value[1]
+}
+oldForm.clients[idx] = ev.target.value[2]
+//console.log("clients",oldForm.clients)
+setForm(oldForm)
+setrouteMap(oldArr)
 }
 
-  const onFinish = (fieldsValue) => {
-    // Should format date value before submit.
-    const rangeValue = fieldsValue['range-picker'];
-    const rangeTimeValue = fieldsValue['range-time-picker'];
-    const values = {
-      ...fieldsValue,
-      'date-picker': fieldsValue['date-picker'].format('YYYY-MM-DD'),
-      'date-time-picker': fieldsValue['date-time-picker'].format('YYYY-MM-DD HH:mm:ss'),
-      'month-picker': fieldsValue['month-picker'].format('YYYY-MM'),
-      'range-picker': [rangeValue[0].format('YYYY-MM-DD'), rangeValue[1].format('YYYY-MM-DD')],
-      'range-time-picker': [
-        rangeTimeValue[0].format('YYYY-MM-DD HH:mm:ss'),
-        rangeTimeValue[1].format('YYYY-MM-DD HH:mm:ss'),
-      ],
-      'time-picker': fieldsValue['time-picker'].format('HH:mm:ss'),
-    };
-    console.log('Received values of form: ', values);
-  };
 
+function showRute(event){
+  event.preventDefault()
+  const map =  refMap.current.map;
+  let max =[]
+  orderNumber.map((order,indx) =>{
+  let dir = new props.google.maps.LatLng(order.lat,order.lng)
+  return(
+    max.push({location:dir})
+  )
+}
+)
+  var first = new props.google.maps.LatLng(19.47822, -99.230599);
+  var second = new props.google.maps.LatLng(19.29976169999999,-99.1136997);
+  //console.log("firt",first)
+  const directionsService = new props.google.maps.DirectionsService();
+  const directionsRenderer = new props.google.maps.DirectionsRenderer({
+    //draggable: true,
+    map,
+   // panel: document.getElementById("panel"),
+  });
 
-  function initMap() {
- 
+  directionsRenderer.addListener("directions_changed", () => {
+    const directions = directionsRenderer.getDirections();
 
-    const autocompleteInput = document.getElementById("location");
-    const autocomplete = new props.google.maps.places.Autocomplete(
-      autocompleteInput,
-      {
-        fields: ["address_components", "geometry", "name"],
-        types: ["address"],
-      }
-    );
+    if (directions) {
+      computeTotalDistance(directions);
+    }
+  });
+  displayRoute(
+    first,
+    second,
+    directionsService,
+    directionsRenderer,
+    max
+  );
+}
 
-    autocomplete.addListener("place_changed", function () {
-      //preventDefault();
-      //marker.setVisible(false);
-      const place = autocomplete.getPlace();
-      if (!place.geometry) {
-        // User entered the name of a Place that was not suggested and
-        // pressed the Enter key, or the Place Details request failed.
-        window.alert("No details available for input: '" + place.name + "'");
-        return;
-      }
-  
-      renderAddress(place);
-      fillInAddress(place);
-
-     setForm({ ...form, direction: place.geometry.location })
-
+function displayRoute(origin, destination, service, display,mad) {
+  service
+    .route({
+      origin: origin,
+      destination: origin,
+      waypoints:mad,
+      // [
+        //    { location: "Adelaide, SA" },
+          //  { location: "Broken Hill, NSW" },
+       //  {location:destination}
+        //  ],
+      travelMode: props.google.maps.TravelMode.DRIVING,
+      optimizeWaypoints: true,
+      avoidTolls: true,
+      drivingOptions: {
+        departureTime: new Date(/* now, or future date */),
+        trafficModel: 'pessimistic'
+      },
+    })
+    .then((result) => {
+      display.setDirections(result);
+    })
+    .catch((e) => {
+      alert("Could not display directions due to: " + e);
     });
+}
 
-    function fillInAddress(place) {
-      // optional parameter
-      const addressNameFormat = {
-        street_number: "short_name",
-        route: "long_name",
-        locality: "long_name",
-        administrative_area_level_1: "short_name",
-        country: "long_name",
-        postal_code: "short_name",
-      };
-      const getAddressComp = function (type) {
-        for (const component of place.address_components) {
-          if (component.types[0] === type) {
-            return component[addressNameFormat[type]];
-          }
-        }
-        return "";
-      };
-      /*document.getElementById("location").value =
-        getAddressComp("street_number") + " " + getAddressComp("route");
-      for (const component of componentForm) {
-        // Location field is handled separately above as it has different logic.
-        if (component !== "location") {
-          document.getElementById(component).value = getAddressComp(component);
-        }  
-      }*/
-    }
+function computeTotalDistance(result) {
+  let total = 0;
+  const myroute = result.routes[0];
 
-    function renderAddress(place) {
-      const maps = refMap.current.map;
-      const lntg = place.geometry.location;
-      maps.setCenter(lntg);
-      renderMarker()
-    }
-   function renderMarker(){
-    const mapCenter = refMap.current.map.getCenter()
-    setMapDirection(mapCenter)
-    }
+  if (!myroute) {
+    return;
   }
-  const [mapDirection, setMapDirection] = useState({
-    lat:19.478270560890298,
-     lng:-99.23066874058068
 
-});
-  useEffect(() => {
-    initMap();
-  }, [form]);
+  for (let i = 0; i < myroute.legs.length; i++) {
+    total += myroute.legs[i].distance.value;
+  }
+
+  total = total / 1000;
+  console.log(total)
+ // document.getElementById("total").innerHTML = total + " km";
+}
+
+  const [mapDirection, setMapDirection] = useState({
+    lat:19.47822,
+    lng:-99.230599
+  });
+
+
   const refMap = useRef();
-  const refMark = useRef();
+  function onChanges(date, dateString) {
+    return setForm({ ...form, date: dateString})
+  }
 
   return (
-    <div>
+    <div className="containers">
       <h1>Nueva Ruta</h1>
-      <form className="signup__form" name="time_related_controls" {...formItemLayout} onFinish={onFinish}>
+      <form className="signup__form" name="time_related_controls" >
               <br />
               <br />
-              <Form.Item name="date-picker" label="DatePicker" >
-              <DatePicker />
-            </Form.Item>
+              <DatePicker onChange={onChanges} />
             <br />
             <br />
         {form.orderNumber.map((mp,index) =>{ 
@@ -248,10 +210,11 @@ oldForm.orderNumber[indx]={
                 >
                   {
                     orderLists.map((order,indx) =>{
+                   //   console.log("order",order.client)
                       return(
                       order.status === "open" &&
-                      <Option key={indx} value={[order.client.direction.lat, order.client.direction.lng]}>
-                        {order.orderNumber}
+                      <Option key={indx} value={[order.client.direction.lat, order.client.direction.lng,order.client._id]}>
+                        {order.client.custumername}
                       </Option>
                       )
                   }
@@ -266,43 +229,8 @@ oldForm.orderNumber[indx]={
               <br />
               <br />
         <button type="danger" onClick={(e)=>addOrder(e)}>
-          Add Product
+          Agregar orden
         </button>
-
-
-        <div className="map-container">
-        <Map
-          className="maps"
-          google={props.google}
-          ref={refMap}
-          defaultCenter={mapDirection}
-          zoom={13}
-        >
-
-         
-          
-
-          
-          <InfoWindow
-            onClose={props.onInfoWindowClose}
-          >
-            <div></div>
-          </InfoWindow>
-        </Map>
-      </div>
-
-
- {//console.log(form.orderNumber[0]!== 0)
-   form.orderNumber[0]!== 0 &&
-   //<h1>hola</h1>
-  form.orderNumber.map((order,indx) =>{
-// console.log("ord",order)
-                       return(
-                         <Marker position={order}  name={"Current location"} />
-                       )
-                   }
-                   )
-}
 
 
         {error && (
@@ -314,7 +242,27 @@ oldForm.orderNumber[indx]={
         <button className="button__submit" type="submit" onClick={(e)=>handleFormSubmission(e)}>
           Submit
         </button>
+        <button className="button__submit" type="submit" onClick={(e)=>showRute(e)}>
+          Mostrar Ruta
+        </button>
       </form>
+
+      <div className="map-container">
+        <Map
+          className="maps"
+          google={props.google}
+          ref={refMap}
+          center={mapDirection}
+          defaultCenter={mapDirection}
+          zoom={3}
+        >
+          <InfoWindow
+            onClose={props.onInfoWindowClose}
+          >
+            <div></div>
+          </InfoWindow>
+        </Map>
+      </div>
     </div>
   );
 }
