@@ -13,7 +13,7 @@ import { getAllRoutes } from "../services/routes";
 
 
 export default function SEECALENDAR({ authenticate }) {
-
+  const navigate = useNavigate();
   const [routeLists, setRotesList] = useState([]);
 const obtainRoutes = async () => {
   getAllRoutes()
@@ -43,17 +43,6 @@ useEffect(() => {
             listData = arr
           }
        })
-
-      /*  switch (dateValue) {
-          case "2022/02/07":
-            listData = [
-              { type: 'warning', content: 'This is warning event.' },
-              { type: 'success', content: 'This is usual event.' },
-            ];
-            break;
-          default:
-        }
-        console.log(listData)*/
         return listData || [];
       }
       
@@ -71,13 +60,21 @@ useEffect(() => {
           </ul>
         );
       } 
-
+      function onSelect(s){
+        let date = s.format("yyyy/MM/DD").replace(/\//g,'-');
+        routeLists.map(item => {
+         console.log(item.date)
+         if(item.date===date){
+          navigate(`/route/${date}`)
+         }
+       })
+      }
       
           return(
 <div>
 <Link to={PATHS.NEWROUTE}>Nueva ruta
 <PlusOutlined />
 </Link>
-<Calendar dateCellRender={dateCellRender} />,
+<Calendar dateCellRender={dateCellRender} onSelect={onSelect}/>,
 </div>
           )}
