@@ -2,7 +2,6 @@ import { Navigate } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import Login from "../pages/LogIn";
 import Signup from "../pages/Signup";
-import MapContainer from "../pages/routes"
 import Custumer from "../pages/CustomerRegistration"
 import NEWMP from "../pages/MpRguistrer"
 import NEWPRODUCT from "../pages/ProductRegistration"
@@ -18,13 +17,13 @@ import SEECALENDAR from "../pages/CalendarView"
 import NEWROUTE from "../pages/RouteRegistreation"
 import SEEROUTEDETAIL from "../pages/RouteDetail"
 
-//import ProtectedPage from "../pages/ProtectedPage";
 import * as PATHS from "../utils/paths";
 import React from 'react'
 
 
 const routes = (props) => {
   const { user } = props;
+//  console.log(user)
   return [
     {
       path: PATHS.HOMEPAGE,
@@ -41,76 +40,118 @@ const routes = (props) => {
     },
     {
       path: PATHS.NEWCUSTUMER,
-      element: <Custumer {...props} />,
+      element: user ? (
+        <Custumer {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
     },
     {
       path: PATHS.NEWMP,
-      element: <NEWMP {...props} />,
+      element: user ? (
+        <NEWMP {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
     }, 
     {
       path: PATHS.NEWPRODUCT,
-      element: <NEWPRODUCT {...props} />,
+      element: user ? (
+        <NEWPRODUCT {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
     }, 
   
     {
       path: PATHS.NEWPACKAGE,
-      element: <NEWPACKAGE {...props} />,
+      element: user ? (
+        <NEWPACKAGE {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
     }, 
     
     {
       path: PATHS.NEWORDER,
-      element: <NEWORDER {...props} />,
+      element: user ? (
+        <NEWORDER {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
     }, 
     {
       path: PATHS.SEEALLORDERS,
-      element: <SEEALLORDERS {...props} />,
+      element: user ? (
+        <SEEALLORDERS {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
     }, 
     {
       path: PATHS.SEEALLMP,
-      element: <SEEALLMP {...props} />,
+      element: user ? (
+        <SEEALLMP {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
     }, 
     {
       path: PATHS.SEEALLPRODUCTS,
-      element: <SEEALLPRODUCTS {...props} />,
+      element: user ? (
+        <SEEALLPRODUCTS {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
     }, 
     {
       path: PATHS.SEEALLPACKAGES,
-      element: <SEEALLPACKAGES {...props} />,
+      element: user ? (
+        <SEEALLPACKAGES {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
     }, 
     {
       path: PATHS.SEEORDERDETAIL,
-      element: <SEEORDERDETAIL {...props} />,
+      element: user ? (
+        <SEEORDERDETAIL {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
     },
     {
       path: PATHS.SEEPRODUCTDETAIL,
-      element: <SEEPRODUCTDETAIL {...props} />,
+      element: user ? (
+        <SEEPRODUCTDETAIL {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
     },
     {
       path: PATHS.SEECALENDAR,
-      element: <SEECALENDAR {...props} />,
+      element: user ? (
+        <SEECALENDAR {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
     },
     {
       path: PATHS.NEWROUTE,
-      element: <NEWROUTE {...props} />,
+      element: user ? (
+        <NEWROUTE {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
     },
     {
       path: PATHS.SEEROUTEDETAIL,
-      element: <SEEROUTEDETAIL {...props} />,
-    },
-    {
-      path: PATHS.PROTECTEDPAGE,
       element: user ? (
-        <MapContainer {...props} />
+        <SEEROUTEDETAIL {...props} />
       ) : (
         <Navigate to={PATHS.LOGINPAGE} replace />
-      ),
-    },
-    
-  //  {
-  //    path: PATHS.MAPS,
-    //  element: <MapContainer {...props} />,
-   // },
-    
+      )
+    }    
   ];
 };
 

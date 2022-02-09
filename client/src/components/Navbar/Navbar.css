@@ -1,4 +1,4 @@
-nav {
+/*nav {
   display: flex;
   padding: 1em;
   justify-content: space-around;
@@ -19,7 +19,7 @@ nav {
 }
 
 .authLink + .authLink {
-  padding: 1em;
+  padding: .4em;
 }
 
 .authLink:hover {
@@ -29,6 +29,8 @@ nav {
 .nav-logoutbtn {
   font-family: inherit;
   font-weight: inherit;
+  height: 4.5em;
+  width: auto;
   padding: 0.5em 1em;
   margin-left: 1em;
   background-color: #5595ff;
@@ -40,9 +42,92 @@ nav {
   transition: all 0.2s ease-in-out;
   position: sticky;
   top: 0;
-}
-
+}*/
+/*
 .nav-logoutbtn:hover {
   transform: scale(1.05);
   background-color: #d13e3e;
+}
+
+.site-layout-content {
+  min-height: 280px;
+  padding: 24px;
+  background: #fff;
+}
+#components-layout-demo-top .logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(255, 255, 255, 0.3);
+}
+.ant-row-rtl #components-layout-demo-top .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
+.nav-logoutbtn:hover {
+ transform: scale(1.05);
+  background-color: #fd0d0d;
+}
+.nav-logoutbtn{
+  background-color:  #3406da;
+}
+.authLink {
+  color: #000000;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+  background-color: #d13e3e;
+}
+
+.authLink:hover {
+  color: #000000 !important;
+  transform: scale(1.05);
+  background-color: #ffffff;
+}*/
+.navs {
+  height: inherit;
+  padding: 1em;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  background: #d13e3e !important;
+  font-weight: 600;
+}
+.nav-logoutbtn {
+  font-family: inherit;
+  font-weight: inherit;
+  height: 100%;
+  width: 100%;
+  margin-left: 1em;
+  background-color: #34C2FB;
+  box-shadow: 0 0 5px 0 aliceblue;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  color: #e3f2ff;
+  transition: all 0.2s ease-in-out;
+  position: sticky;
+  top: 0;
+}
+.bcn{
+  background: #d13e3e !important;
+  height: 100% !important;
+  width: 100% !important;
+}
+ul{
+  background: #ffffff !important;
+}
+
+li:hover{
+  color: #000000 !important;
+  background-color: #d13e3e  !important;
+}
+
+li div{
+  color: #000000 !important;
+}
+.link-style{
+  color: #000000 !important;
+}
+.ant-menu-item-selected{
+  background-color: #d13e3e  !important;  
 }

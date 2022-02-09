@@ -6,18 +6,11 @@ function HomePage() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <img src="http://www.jobari.com/wp-content/themes/jobari/img/jobari-logo.png" className="App-logo" alt="logo" />
+       <br />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Luis Ricardo Salas
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );
