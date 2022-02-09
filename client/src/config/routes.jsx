@@ -16,6 +16,7 @@ import SEEORDERDETAIL from "../pages/OrderDetail"
 import SEEPRODUCTDETAIL from "../pages/ProductDetail"
 import SEECALENDAR from "../pages/CalendarView"
 import NEWROUTE from "../pages/RouteRegistreation"
+import SEEROUTEDETAIL from "../pages/RouteDetail"
 
 //import ProtectedPage from "../pages/ProtectedPage";
 import * as PATHS from "../utils/paths";
@@ -93,13 +94,18 @@ const routes = (props) => {
       element: <NEWROUTE {...props} />,
     },
     {
+      path: PATHS.SEEROUTEDETAIL,
+      element: <SEEROUTEDETAIL {...props} />,
+    },
+    {
       path: PATHS.PROTECTEDPAGE,
       element: user ? (
         <MapContainer {...props} />
       ) : (
         <Navigate to={PATHS.LOGINPAGE} replace />
       ),
-    },  
+    },
+    
   //  {
   //    path: PATHS.MAPS,
     //  element: <MapContainer {...props} />,

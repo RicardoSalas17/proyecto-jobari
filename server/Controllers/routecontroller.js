@@ -2,26 +2,31 @@ const Routes = require("../models/Route.model");
 
 exports.createRoute = async (req, res) => {
     const {
-        orderNumbers,
+        locations,
         date,
-        clients
+        clients,
+        orders,
               } = req.body
              const Route = await Routes.create({
-                namorderNumberse:orderNumbers,
+                locations:locations,
                 date:date,
-                clients:clients
+                clients:clients,
+                orders:orders
               });
               res.status(201).json(Route)
   };
 
   exports.getAllRoute = async (req, res) => {
     const AllRoutes = await Routes.find().populate({
-      path:"clients"})
+      path:"clients"}).populate({
+        path:"orders"})
     res.status(200).json({ AllRoutes });
   };
 
   exports.getRoute = async (req, res) => {
     const { id } = req.params;
-    const route = await Routes.findById(id)
+    const route = await Routes.findById(id).populate({
+      path:"clients"}).populate({
+        path:"orders"})
    res.status(200).json(route);
   };

@@ -10,14 +10,15 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
 export function NEWROUTE(props) {
   const [form, setForm] = useState({
-    orderNumber: [{
+    locations: [{
       lat:19.47822,
       lng:-99.230599
     }],
     date: "",
-    clients:[0]
+    clients:[0],
+    orderNumbers:[0]
   });
-  const { orderNumber, date, clients} = form;
+  const { locations, date, clients, orderNumbers} = form;
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
@@ -37,15 +38,16 @@ export function NEWROUTE(props) {
 
   const { Option } = Select;
   function handleFormSubmission(event) {
-       // event.preventDefault()
+        event.preventDefault()
     const {authenticate} = props
     const credentials = {
-      orderNumber:orderNumber,
+      locations:locations,
       date:date,
-      clients:clients
+      clients:clients,
+      orders:orderNumbers
     };
-    console.log("credentials---", credentials);
-   regisRoute(credentials).then((res) => {
+   // console.log("credentials---", credentials);
+  regisRoute(credentials).then((res) => {
       if (!res.status) {
         return setError({ message: "Invalid credentials" });
       }
@@ -58,16 +60,9 @@ export function NEWROUTE(props) {
 
 const addOrder =(event)=>{
   event.preventDefault()
- let oldForm = form.orderNumber
-
- //console.log(form.orderNumber)
+ let oldForm = form.locations
  oldForm.push(0)
-
- //console.log("old",oldForm)
- 
- return setForm({ ...form, orderNumber: oldForm })
-    
- //console.log("new",form)
+ return setForm({ ...form, locations: oldForm })
 }
 const [routeMap, setrouteMap] = useState([{
   lat:19.47822,
@@ -77,7 +72,7 @@ const [routeMap, setrouteMap] = useState([{
 const onChangeSelectOrder=(ev, indx)=>{
 let oldForm = form
 let idx = indx
-oldForm.orderNumber[ indx++]={
+oldForm.locations[ indx++]={
   lat:ev.target.value[0],
    lng:ev.target.value[1]
 }
@@ -87,6 +82,7 @@ oldForm.orderNumber[ indx++]={
    lng:ev.target.value[1]
 }
 oldForm.clients[idx] = ev.target.value[2]
+oldForm.orderNumbers[idx]= ev.target.value[3]
 //console.log("clients",oldForm.clients)
 setForm(oldForm)
 setrouteMap(oldArr)
@@ -97,7 +93,7 @@ function showRute(event){
   event.preventDefault()
   const map =  refMap.current.map;
   let max =[]
-  orderNumber.map((order,indx) =>{
+  locations.map((order,indx) =>{
   let dir = new props.google.maps.LatLng(order.lat,order.lng)
   return(
     max.push({location:dir})
@@ -194,7 +190,7 @@ function computeTotalDistance(result) {
               <DatePicker onChange={onChanges} />
             <br />
             <br />
-        {form.orderNumber.map((mp,index) =>{ 
+        {form.locations.map((mp,index) =>{ 
         return(
           <div key={index}>
             <Input.Group compact>
@@ -210,10 +206,10 @@ function computeTotalDistance(result) {
                 >
                   {
                     orderLists.map((order,indx) =>{
-                   //   console.log("order",order.client)
+                     // console.log("order",order)
                       return(
                       order.status === "open" &&
-                      <Option key={indx} value={[order.client.direction.lat, order.client.direction.lng,order.client._id]}>
+                      <Option key={indx} value={[order.client.direction.lat, order.client.direction.lng,order.client._id, order._id]}>
                         {order.client.custumername}
                       </Option>
                       )

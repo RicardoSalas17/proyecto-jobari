@@ -16,3 +16,4 @@ export const SEEORDERDETAIL="/order/:id";
 export const SEEPRODUCTDETAIL="/product/:id";
 export const SEECALENDAR="/dates";
 export const NEWROUTE="/new-route";
+export const SEEROUTEDETAIL="/route-detail/:id"

@@ -54,7 +54,7 @@ useEffect(() => {
             //  console.log(item)
               return(
               <li key={item.content}>
-                <Badge status={item.type} text={item.content} />
+                <Badge key={item.content} status={item.type} text={item.content} />
               </li>
             )})}
           </ul>
@@ -63,9 +63,10 @@ useEffect(() => {
       function onSelect(s){
         let date = s.format("yyyy/MM/DD").replace(/\//g,'-');
         routeLists.map(item => {
-         console.log(item.date)
+         //console.log(item.date)
          if(item.date===date){
-          navigate(`/route/${date}`)
+           //console.log()
+       navigate(`/route-detail/${item._id}`)
          }
        })
       }
