@@ -7,8 +7,10 @@ function internalServerError(err) {
     return {
       status: false,
       errorMessage: err.response.data.errorMessage,
+      errstatus:err.response.status
     };
   }
+
   return {
     status: false,
     errorMessage: "Internal server error. Please check your server",
@@ -16,26 +18,26 @@ function internalServerError(err) {
 }
 
 function successStatus(res) {
-  const user=USER_HELPERS.getUserToken()
-  console.log("Sicc",res)
   return {
     status: true,
-    data: res.data,
+    data: res.data
   };
 }
 
+const authorization =  {
+  headers: {
+    Authorization: USER_HELPERS.getUserToken(),
+  }
+}
 // creates a basic url for every request in this file
 const custumerService = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}/custumer`,
 });
 
+
 export function regisCustumer(credentials) {
   return custumerService
-    .post("/new-custumer", credentials,  {
-      headers: {
-        Authorization: USER_HELPERS.getUserToken(),
-      },
-    })
+    .post("/new-custumer",credentials,authorization)
     .then(successStatus)
     .catch(internalServerError);
 }
