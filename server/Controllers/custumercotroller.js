@@ -13,21 +13,20 @@ exports.createCustumer = async (req, res) => {
               if (!req.headers.authorization) {
                 return res.json(null);
               }
-              const accessToken = req.headers.authorization;
+              const accessTokens = req.headers.authorization;
              const custumer = await Custumer.create({
                 custumername:custumername,
                 phone:phone,
                 email:email,
                 direction:direction,
               });
-              Session.findById(accessToken)
+              Session.findById(accessTokens)
               .populate("user")
-              .then((session) => {
-                if (!session) {
-                  return res.status(404).json({ errorMessage: "Session does not exist" });
+              .then((user) => {
+                if (!user) {
+                  return res.status(404).json({ errorMessage: "user does not exist" });
                 }
-                res.status(201).json(session)
-                //return 
+                res.status(201).json({user, accessToken : accessTokens})
               });
   };
   exports.getAllCustumers = async (req, res) => {

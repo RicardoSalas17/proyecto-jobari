@@ -44,9 +44,8 @@ export function MapContainer(props) {
     regisCustumer(credentials).then((res) => {
       if (!res.status) {
         return setError({ message: "Invalid credentials" });
-      }    
+      }
       USER_HELPERS.setUserToken(res.data.accessToken);
-      //console.log("regis",res)
       authenticate(res.data.user);
       navigate(PATHS.SEEALLPRODUCTS);
    });

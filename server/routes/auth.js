@@ -23,7 +23,7 @@ router.get("/session", (req, res) => {
 
   // accessToken is being sent on every request in the headers
   const accessToken = req.headers.authorization;
-
+//console.log("token",accessToken)
   Session.findById(accessToken)
     .populate("user")
     .then((session) => {
@@ -80,7 +80,8 @@ router.post("/signup", isLoggedOut, (req, res) => {
         });
       })
       .then((user) => {
-        Session.create({
+        //console.log(user)
+       Session.create({
           user: user._id,
           createdAt: Date.now(),
         }).then((session) => {
@@ -132,9 +133,12 @@ router.post("/login", isLoggedOut, (req, res, next) => {
         if (!isSamePassword) {
           return res.status(400).json({ errorMessage: "Wrong credentials." });
         }
+        //console.log("user",user)
         Session.create({ user: user._id, createdAt: Date.now() }).then(
           (session) => {
-            return res.json({ user, accessToken: session._id });
+            return(
+            res.json({ user, accessToken: session._id })
+            )
           }
         );
       });
