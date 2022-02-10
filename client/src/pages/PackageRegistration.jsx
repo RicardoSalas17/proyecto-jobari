@@ -22,7 +22,7 @@ return setForm({ ...form, [name]: value });
   }
 
   function handleFormSubmission(event) {
-  //  event.preventDefault();
+  event.preventDefault();
     const credentials = {
         name,
       clave,
@@ -36,7 +36,12 @@ return setForm({ ...form, [name]: value });
       }
       USER_HELPERS.setUserToken(res.data.accessToken);
       authenticate(res.data.user);
-      navigate(PATHS.NEWPACKAGE);
+      setForm({
+        name:"",
+        clave: "",
+        capacity:0 ,
+      })
+      //navigate(PATHS.NEWPACKAGE);
     });
   }
 

@@ -31,7 +31,7 @@ export function MapContainer(props) {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   function handleFormSubmission(event) {
-   // event.preventDefault()
+   event.preventDefault()
    // console.log(event)
     const {authenticate} = props
     const credentials = {
@@ -46,6 +46,7 @@ export function MapContainer(props) {
         return setError({ message: "Invalid credentials" });
       }    
       USER_HELPERS.setUserToken(res.data.accessToken);
+      //console.log("regis",res)
       authenticate(res.data.user);
       navigate(PATHS.SEEALLPRODUCTS);
    });

@@ -1,4 +1,6 @@
 const Custumer = require("../models/Custumer.model");
+const Session = require("../models/Session.model");
+
 
 exports.createCustumer = async (req, res) => {
     const { 
@@ -8,13 +10,25 @@ exports.createCustumer = async (req, res) => {
         direction
               } = req.body
             
-              const custumer = await Custumer.create({
+              if (!req.headers.authorization) {
+                return res.json(null);
+              }
+              const accessToken = req.headers.authorization;
+             const custumer = await Custumer.create({
                 custumername:custumername,
                 phone:phone,
                 email:email,
                 direction:direction,
               });
-              res.status(201).json(custumer)
+              Session.findById(accessToken)
+              .populate("user")
+              .then((session) => {
+                if (!session) {
+                  return res.status(404).json({ errorMessage: "Session does not exist" });
+                }
+                res.status(201).json(session)
+                //return 
+              });
   };
   exports.getAllCustumers = async (req, res) => {
     const Custumers = await Custumer.find()

@@ -16,6 +16,8 @@ function internalServerError(err) {
 }
 
 function successStatus(res) {
+  const user=USER_HELPERS.getUserToken()
+  console.log("Sicc",res)
   return {
     status: true,
     data: res.data,
@@ -29,7 +31,11 @@ const custumerService = axios.create({
 
 export function regisCustumer(credentials) {
   return custumerService
-    .post("/new-custumer", credentials)
+    .post("/new-custumer", credentials,  {
+      headers: {
+        Authorization: USER_HELPERS.getUserToken(),
+      },
+    })
     .then(successStatus)
     .catch(internalServerError);
 }
