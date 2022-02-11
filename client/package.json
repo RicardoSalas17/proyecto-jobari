@@ -15,7 +15,8 @@
     "react-helmet": "^6.1.0",
     "react-places-autocomplete": "^7.3.0",
     "react-router-dom": "^6.0.2",
-    "react-scripts": "^3.4.4",
+    "react-scripts": "^5.0.0",
+    "sass": "^1.49.7",
     "styled-components": "^5.3.3",
     "sweetalert2": "^11.4.0"
   },

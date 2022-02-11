@@ -1,5 +1,5 @@
 @import "~antd/dist/antd.css";
-form.auth__form {
+/*form.auth__form {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -108,10 +108,28 @@ input:focus::placeholder {
     height: 80% !important;
 }
 .form-container {
-
   width: 10%;
 }
 
 .map-container{
   margin-left: 4%;
+}
+*/
+.site-layout-content {
+  padding: 24px;
+  background: #fff;
+  height: 80vh;
+  margin:0
+}
+
+#components-layout-demo-top .logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: rgba(246, 206, 206, 0.3);
+}
+.ant-row-rtl #components-layout-demo-top .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
 }

@@ -46,11 +46,15 @@ export function MapContainer(props) {
   // console.log("credentials---", form);
    // const {authenticate} = props
     //console.log(authenticate)
+   const {user}=props
+    console.log(user)
+    /*
     const formRegis = {
       custumername:custumername,
       phone:phone,
       email:email,
-      direction,direction
+      direction,direction,
+      
     };
 
 
@@ -117,7 +121,7 @@ else{
         Swal.fire('No se hicieron cambios', '', 'info')
       }
     })
-  }
+  }*/
   }
 
   const [errorWrite, setErrorWrite] = useState(false);

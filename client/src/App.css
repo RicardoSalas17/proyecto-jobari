@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  height: 100%;
+  width: 100%;
 }
 
 .App-logo {
@@ -22,6 +24,16 @@
 .App-link {
   color: #61dafb;
 }
+.layout{
+  background-color: rgb(235, 136, 141) !important;
+  text-align: center;
+  height: 100%;
+  width: 100%;
+
+}
+.ant-layout-footer{
+  background-color: rgb(235, 136, 141) !important;
+}
 
 @keyframes App-logo-spin {
   from {
@@ -31,3 +43,4 @@
     transform: rotate(360deg);
   }
 }
+
