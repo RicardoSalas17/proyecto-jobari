@@ -6,7 +6,6 @@ const custumerSchema = new Schema(
     custumername: {
       type: String,
       unique: true,
-
     },
     phone:{
       type:String
@@ -17,13 +16,15 @@ const custumerSchema = new Schema(
     direction: {
         type: Object,
       },
+      cordinates: {
+        type: Object,
+      },
     products:{
         type: Array
     },
     productrequestactive:{
         type: Array
     },
-
     productrequest:{
         type: Array
     },

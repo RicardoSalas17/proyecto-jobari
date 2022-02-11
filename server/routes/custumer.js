@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const isLoggedIn = require("../middleware/isLoggedIn");
 const {
 createCustumer,
 getAllCustumers
@@ -6,6 +7,6 @@ getAllCustumers
 
 
 router.post("/new-custumer", createCustumer);
-router.get("/get-allcustumer", getAllCustumers);
+router.get("/get-allcustumer",isLoggedIn, getAllCustumers);
 
 module.exports = router;

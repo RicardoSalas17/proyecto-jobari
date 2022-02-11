@@ -20,10 +20,17 @@ export function MapContainer(props) {
     custumername: "",
     phone: "",
     email:"",
-    direction:""
-
+    direction:{
+      location:"",
+      locality: "",
+      administrative_area_level_1: "",
+      country: "",
+      postal_code: "",
+    },
+    cordinates:""
   });
-  const { custumername, phone,email,direction} = form;
+  const { custumername, phone,email,direction,cordinates} = form;
+  const { location,locality,administrative_area_level_1,country,postal_code} = form.direction;
   var componentForm = [
     "location",
     "locality",
@@ -36,7 +43,7 @@ export function MapContainer(props) {
   const navigate = useNavigate();
   function handleFormSubmission(event) {
    event.preventDefault()
-   // console.log(event)
+  // console.log("credentials---", form);
    // const {authenticate} = props
     //console.log(authenticate)
     const formRegis = {
@@ -45,13 +52,20 @@ export function MapContainer(props) {
       email:email,
       direction,direction
     };
-    //console.log("credentials---", credentials);
+
 
     if(custumername ===""||phone===""|| email===""){
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
         text: "Por favor, llena todos los campos"
+      })
+    }
+    else if(!phone){
+      Swal.fire({
+        icon: 'error',
+        title: 'Error al ingresar telefono',
+        text: "Por favor, llena el campo solon con numeros y sin espacios"
       })
     }
     else if(direction ==="" &&custumername != ""&& phone!= ""&& email!= ""){
@@ -106,10 +120,9 @@ else{
   }
   }
 
+  const [errorWrite, setErrorWrite] = useState(false);
+
   function handleInputChange(event) {
- //console.log(form)
-  //console.log(event)
-  //console.log("target",event.target)
   const { name, value } = event.target;
   if (name === "phone"){
    let valuesNumber = Number(value)
@@ -134,13 +147,13 @@ else{
 
   const [addressNameFormat, setAddressNameFormat] = useState({
     location:"",
-    locality: "long_name",
-    administrative_area_level_1: "short_name",
-    country: "long_name",
-    postal_code: "short_name",
+    locality: "",
+    administrative_area_level_1: "",
+    country: "",
+    postal_code: "",
   }
 );
-const { street_number, route,locality,administrative_area_level_1,country,postal_code} = addressNameFormat;
+//const { location,locality,administrative_area_level_1,country,postal_code} = addressNameFormat;
 
   function initMap() {
     const autocompleteInput = document.getElementById("location");
@@ -148,7 +161,8 @@ const { street_number, route,locality,administrative_area_level_1,country,postal
       autocompleteInput,
       {
         fields: ["address_components", "geometry", "name"],
-        types: ["address"],
+        componentRestrictions:{country: "mx"},
+        types: [],
       }
     );
     autocomplete.addListener("place_changed", function () {
@@ -156,24 +170,17 @@ const { street_number, route,locality,administrative_area_level_1,country,postal
       if (!place.geometry) {
         // User entered the name of a Place that was not suggested and
         // pressed the Enter key, or the Place Details request failed.
-        window.alert("No details available for input: '" + place.name + "'");
+        window.alert("Por favor da click en las opciones o trata con otra dirección");
         return;
       }
       renderAddress(place);
       fillInAddress(place);
-      setForm({ ...form, direction: place.geometry.location })
-
+      setForm({ ...form, cordinates: place.geometry.location })
     });
 
 
 
     function fillInAddress(place) {
-      // optional parameter
-
-//console.log("places",place.address_components)
-
-
-      
       const addressNameFormatos ={
         street_number: "short_name",
         route: "long_name",
@@ -190,22 +197,25 @@ const { street_number, route,locality,administrative_area_level_1,country,postal
         }
         return "";
       };
-      document.getElementById("location").value =
-        getAddressComp("street_number") + " " + getAddressComp("route");
-
           const street = getAddressComp("street_number")
-          //console.log("st",street)
           const route= getAddressComp("route")
-const formas={
-    location:`${street} ${route}`,
-    locality: getAddressComp("locality"),
-    administrative_area_level_1: getAddressComp("administrative_area_level_1"),
-    country:getAddressComp("country"),
-    postal_code: getAddressComp("postal_code"),
-  }
-  return setAddressNameFormat(formas);
-    }
-
+          const locality = getAddressComp("locality")
+          const administrative_area_level_1 = getAddressComp("administrative_area_level_1")
+          const country = getAddressComp("country")
+          const postal_code = getAddressComp("postal_code")
+          const formas={
+            locality:`${locality}`,
+            location:`${street} ${route}`,
+            country:`${country}`,
+            administrative_area_level_1:`${administrative_area_level_1}`,
+            postal_code:`${postal_code}`,
+          }
+          let oldForm = form
+          oldForm.direction=formas
+          //console.log('formas: ', oldForm);
+          return setForm(oldForm);
+         // console.log()
+        }
     function renderAddress(place) {
       const maps = refMap.current.map;
       const lntg = place.geometry.location;
@@ -217,18 +227,8 @@ const formas={
     setMapDirection(mapCenter)
     }
   }
-  
-
-    const onFinish = (values) => {
-      console.log('Success:', values);
-    };
-  
-    const onFinishFailed = (errorInfo) => {
-      console.log('Failed:', errorInfo);
-    };
 
   return (
-
     <div className="noup">
       <div className="containers">
       <Form
@@ -236,35 +236,29 @@ const formas={
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       initialValues={{ remember: true }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
-
-
       <Form.Item
         label="Nombre del cliete"
-        name="username"
+        name="custumername"
         rules={[{ required: true, message:'Porfacor escribe el Nombre del cliete.' }]}
         >
         <Input 
-          name="username"
+          name="custumername"
           value={custumername}
           onChange={handleInputChange} />
       </Form.Item>
-
-
       <Form.Item
         label="Telefono"
         rules={[{ required: true, message:'Porfavor escribe un numero de telefono'}]}
         name="phone">
         <Input
+          id="pone"
           name="phone"
-          value={custumername}
-          onChange={handleInputChange} />
+          value={phone}
+          onChange={handleInputChange}
+          />
       </Form.Item>
-
-
       <Form.Item
         name="email"
         label="E-mail"
@@ -284,110 +278,61 @@ const formas={
                   value={email}
                   onChange={handleInputChange}/>
       </Form.Item>
-
       <Form.Item
-        label="Dirección"
+        label="Buscador de dirección"
         rules={[{ required: true, message: 'Please input your username!' }]}
       >
         <Input id="location" />
       </Form.Item>
-
-
-
       <Form.Item
-        label="Cidad">
+      label="Dirección">
+      <Input
+      placeholder="Direction"
+      value={location}
+      disabled/>
+    </Form.Item>
+      <Form.Item
+        label="Cuidad">
         <Input id="locality"
+        placeholder="Ciudad"
         value={locality}
         disabled/>
       </Form.Item>
-
-
-
-
-
       <Form.Item label="Address">
         <Input.Group compact>
           <Form.Item
-            name={['address', 'province']}
             noStyle
-            rules={[{ required: true, message: 'Province is required' }]}
-          >    
-           <Input style={{ width: '50%' }} placeholder="Estado o provincia" disable />
+            >    
+            <Input style={{ width: '55%' }}
+            placeholder="Estado o provincia"
+            id="administrative_area_level_1"
+            value={administrative_area_level_1}
+           disabled />
           </Form.Item>
-
-
           <Form.Item
-            name={['address', 'street']}
             noStyle
-            rules={[{ required: true, message: 'Street is required' }]}
-          >
-            <Input style={{ width: '50%' }} placeholder="Codigo Postal" />
+            >
+            <Input style={{ width: '45%' }} 
+            value={postal_code}
+            placeholder="Codigo Postal"
+            id="postal_code"
+            disabled/>
           </Form.Item>
         </Input.Group>
       </Form.Item>
-
-
-
-
-
-
-
-
       <Form.Item
-        label="Password"
-        name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
-      >
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
-
+      label="Cuidad">
+      <Input id="country"
+      placeholder="Pais"
+      value={country}
+      disabled/>
+    </Form.Item>
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" onClick={(e)=>handleFormSubmission(e)}>
           Submit
         </Button>
       </Form.Item>
     </Form>
-
-
-
-
-
-
-
-
-
-
-
-<div>
-
-            <div className="half-input-container">
-              <input
-                type="text"
-                className="half-input"
-                placeholder="Estado o provincia"
-                id="administrative_area_level_1"
-              />
-          <br />              
-              <input
-                type="text"
-                className="half-input"
-                placeholder="C.P."
-                id="postal_code"
-              />
-            </div>
-          <br />
-            <input type="text" placeholder="Pais" id="country" />
-          <br />
-
-        <button className="button__submit" type="submit" onClick={(e)=>handleFormSubmission(e)}>
-          Submit
-        </button>
-          </div>
-
         <div className="map-container">
           <Map
             className="maps"

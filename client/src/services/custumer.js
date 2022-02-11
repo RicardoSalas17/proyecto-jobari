@@ -44,7 +44,7 @@ export function regisCustumer(credentials) {
 
 export function getAllClients() {
   return custumerService
-    .get("/get-allcustumer")
+    .get("/get-allcustumer",authorization)
     .then(successStatus)
     .catch(internalServerError);
 }

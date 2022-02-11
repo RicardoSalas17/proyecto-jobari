@@ -1,15 +1,18 @@
 const Custumer = require("../models/Custumer.model");
 const Session = require("../models/Session.model");
-
+const isLoggedIn = require("../middleware/isLoggedIn");
 
 exports.createCustumer = async (req, res) => {
     const { 
         custumername,
         phone,
         email,
-        direction
+        direction,
+        cordinates
               } = req.body
+             // console.log(isLoggedIn)
 
+/*
               await Session.findById(req.headers.authorization)
               .populate("user")
               .then((session) => {
@@ -19,7 +22,7 @@ exports.createCustumer = async (req, res) => {
                 if(custumername ===""||phone===""|| email===""){
                   return res.status(400).json({ errorMessage: "Por favor, llena todos los campos"});
                 }
-                if(direction ==="" &&custumername != ""&& phone!= ""&& email!= ""){
+                if(cordinates ==="" &&custumername != ""&& phone!= ""&& email!= ""){
                   return res.status(400).json({errorMessage:"Asegurate de que en el map se muestre el marcador llenando solo el campo direccion"});
                 }
                 Custumer.findOne({ custumername }).then((found) => {
@@ -33,6 +36,7 @@ exports.createCustumer = async (req, res) => {
                   phone:phone,
                   email:email,
                   direction:direction,
+                  cordinates:cordinates
                 })
                 .then((custumer) => {
                    return res.status(201).json({custumer});
@@ -51,7 +55,7 @@ exports.createCustumer = async (req, res) => {
                       return res.status(500).json({ errorMessage: error.message });
                     });
                 }
-              )
+              )*/
             }
 
 

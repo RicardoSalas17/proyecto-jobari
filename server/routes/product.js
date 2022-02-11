@@ -4,10 +4,11 @@ const {
     getAllProducts,
     getProduct
 } = require("../Controllers/productcontrollers");
+const isLoggedIn = require("../middleware/isLoggedIn");
 
 
 router.post("/new-product", createProduct);
-router.get("/get-products", getAllProducts);
+router.get("/get-products", isLoggedIn,getAllProducts);
 router.get("/product-detail/:id", getProduct);
 
 
