@@ -30,7 +30,6 @@ export default function SEEALLPACKAGES({ authenticate }) {
 <Row gutter={16}>
   <Col span={8}>
   {packagesList.map((pack,indx) => 
-
    <Col span={30} key={indx}>                
                   <Card title={pack.clave} bordered={true}>
                       <p>Nombre:{pack.name}</p>               

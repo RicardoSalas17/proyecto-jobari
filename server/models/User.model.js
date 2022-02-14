@@ -7,17 +7,19 @@ const userSchema = new Schema(
       type: String,
       // unique: true -> Ideally, should be unique, but its up to you
     },
-    ApellidoPat: {
+    apellidoPat: {
       type: String,
       required: true 
     },
-    ApellidoMat: {
+    apellidoMat: {
         type: String,
         required: true 
       },
-    Mail: {
+    mail: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
+        active: true
       },  
     password: String,
     role: {
@@ -25,23 +27,27 @@ const userSchema = new Schema(
       required: true,
       enum: ["Calidad","Mantenimiento","Gerencia","Administración", "Producción","Sistema","I&D", "Gestión de calidad", "Ventas", "Embarques", "Sistemas", "ADMIN-AP"],
     },
-    Rutas:[{
+    clientes:[{
+      type: Schema.ObjectId,
+      ref: "Custumer"
+    }],
+    rutas:[{
       type: Schema.ObjectId,
       ref: "Route"
     }],
-    Productos:[{
+    productos:[{
       type: Schema.ObjectId,
       ref: "Product"
     }],
-    Ordenes:[{
+    ordenes:[{
       type: Schema.ObjectId,
       ref: "Order"
     }],
-    Empaques:[{
+    empaques:[{
       type: Schema.ObjectId,
       ref: "Package"
     }],
-    Author:{
+    author:{
       type: Schema.Types.ObjectId,
       ref: "User"
     } 

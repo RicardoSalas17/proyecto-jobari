@@ -1,21 +1,30 @@
 import React, {
-  Component,
   useState,
   useEffect,
   useRef,
-  useCallback,
 } from "react";
-
-import { Form, Input,InputNumber, Button, Checkbox } from 'antd';
-
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
-import { regisCustumer } from "../services/custumer";
+import {
+  Layout,
+  Breadcrumb,
+  Form,
+  Col,
+  Row,
+  Input,
+  Button,
+} from "antd";
+import "./custumer.scss";
+import { 
+  Map,
+  Marker,
+  GoogleApiWrapper
+} from "google-maps-react";
+import { regisCustumer } from "../../services/custumer";
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2'
-import * as PATHS from "../utils/paths";
-import * as USER_HELPERS from "../utils/userToken";
+import * as PATHS from "../../utils/paths";
+const { Content } = Layout;
 
-export function MapContainer(props) {
+export function NEWCUSTMER(props) {
   const [form, setForm] = useState({
     custumername: "",
     phone: "",
@@ -29,35 +38,33 @@ export function MapContainer(props) {
     },
     cordinates:""
   });
-  const { custumername, phone,email,direction,cordinates} = form;
-  const { location,locality,administrative_area_level_1,country,postal_code} = form.direction;
-  var componentForm = [
-    "location",
-    "locality",
-    "administrative_area_level_1",
-    "country",
-    "postal_code",
-  ];
 
-  const [error, setError] = useState(null);
+  const { 
+    custumername, 
+    phone,
+    email,
+    direction,
+    cordinates} = form;
+
+  const { location,
+    locality,
+    administrative_area_level_1,
+    country,
+    postal_code} = form.direction;
+
   const navigate = useNavigate();
-  function handleFormSubmission(event) {
-   event.preventDefault()
-  // console.log("credentials---", form);
-   // const {authenticate} = props
-    //console.log(authenticate)
+
+  const handleFormSubmission=()=> {
    const {user}=props
-    console.log(user)
-    /*
+
     const formRegis = {
       custumername:custumername,
       phone:phone,
       email:email,
-      direction,direction,
-      
+      direction,
+      cordinates,
+      author:user._id
     };
-
-
     if(custumername ===""||phone===""|| email===""){
       Swal.fire({
         icon: 'error',
@@ -72,7 +79,7 @@ export function MapContainer(props) {
         text: "Por favor, llena el campo solon con numeros y sin espacios"
       })
     }
-    else if(direction ==="" &&custumername != ""&& phone!= ""&& email!= ""){
+    else if(direction ==="" &&custumername !== ""&& phone!== ""&& email!== ""){
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -90,7 +97,6 @@ else{
       if (result.isConfirmed) {
         regisCustumer(formRegis).then((res) => {
           if (!res.status) {
-          console.log("resss",res)
             res.errstatus === 400 &&
             Swal.fire({
               icon: 'error',
@@ -103,30 +109,28 @@ else{
               title: 'Oops...',
               text: `Algo esta mal`
             })
-          //  return setError({ message: "Invalid credentials" });
           }
           
           if (res.status){
+            console.log(res.data.custumer._id)
             Swal.fire({
-            position: 'top-end',
             icon: 'success',
             title: `Se creo cliente: ${res.data.custumer.custumername}`,
             showConfirmButton: false,
             timer: 1500
     })
-            navigate(PATHS.SEEALLPRODUCTS);
+            navigate(`${PATHS.SEEALLPRODUCTS}/${res.data.custumer._id}`);
           }
        });
       } else if (result.isDenied) {
         Swal.fire('No se hicieron cambios', '', 'info')
       }
     })
-  }*/
+  }
   }
 
-  const [errorWrite, setErrorWrite] = useState(false);
 
-  function handleInputChange(event) {
+  const handleInputChange =(event)=>{
   const { name, value } = event.target;
   if (name === "phone"){
    let valuesNumber = Number(value)
@@ -142,24 +146,7 @@ else{
     lng:-99.230599
   });
 
-  useEffect(() => {
-    initMap();
-  }, [form]);
-  const refMap = useRef();
-  const refMark = useRef();
-
-
-  const [addressNameFormat, setAddressNameFormat] = useState({
-    location:"",
-    locality: "",
-    administrative_area_level_1: "",
-    country: "",
-    postal_code: "",
-  }
-);
-//const { location,locality,administrative_area_level_1,country,postal_code} = addressNameFormat;
-
-  function initMap() {
+  const initMap =()=>{
     const autocompleteInput = document.getElementById("location");
     const autocomplete = new props.google.maps.places.Autocomplete(
       autocompleteInput,
@@ -182,9 +169,7 @@ else{
       setForm({ ...form, cordinates: place.geometry.location })
     });
 
-
-
-    function fillInAddress(place) {
+    const fillInAddress=(place)=>{
       const addressNameFormatos ={
         street_number: "short_name",
         route: "long_name",
@@ -193,7 +178,7 @@ else{
         country: "long_name",
         postal_code: "short_name",
       }
-      const getAddressComp = function (type) {
+      const getAddressComp = (type)=> {
         for (const component of place.address_components) {
           if (component.types[0] === type) {
             return component[addressNameFormatos[type]];
@@ -216,31 +201,43 @@ else{
           }
           let oldForm = form
           oldForm.direction=formas
-          //console.log('formas: ', oldForm);
           return setForm(oldForm);
-         // console.log()
         }
-    function renderAddress(place) {
+    const renderAddress=(place)=> {
       const maps = refMap.current.map;
       const lntg = place.geometry.location;
       maps.setCenter(lntg);
       renderMarker()
     }
-   function renderMarker(){
+   const renderMarker=()=>{
     const mapCenter = refMap.current.map.getCenter()
     setMapDirection(mapCenter)
     }
   }
+  useEffect(() => {
+    initMap();
+  });
+  const refMap = useRef();
+  const refMark = useRef();
 
   return (
-    <div className="noup">
-      <div className="containers">
-      <Form
+<Content style={{ padding: "30px 50px 0 50px " }}>
+      <div className="site-layout-content">
+      <Row>
+      <Col span={24}>
+            <h1>Registro de cliente</h1>
+          </Col>
+          </Row>
+      <Row className="for">
+        <Breadcrumb style={{ margin: "6vh 0" }}></Breadcrumb>
+          <Col className="formAuth" span={12}>
+          <Form
       name="basic"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       initialValues={{ remember: true }}
       autoComplete="off"
+      onFinish={handleFormSubmission}
     >
       <Form.Item
         label="Nombre del cliete"
@@ -332,32 +329,30 @@ else{
       disabled/>
     </Form.Item>
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-        <Button type="primary" htmlType="submit" onClick={(e)=>handleFormSubmission(e)}>
+        <Button type="primary" htmlType="submit" >
           Submit
         </Button>
       </Form.Item>
     </Form>
-        <div className="map-container">
+          </Col>
+        <Col className="maps" span={12}>
+        <div>
           <Map
-            className="maps"
             google={props.google}
             ref={refMap}
             defaultCenter={mapDirection}
             zoom={14}
           >
             <Marker position={mapDirection}  name={"Current location"} ref={refMark}/>
-            <InfoWindow
-              onClose={props.onInfoWindowClose}
-            >
-              <div></div>
-            </InfoWindow>
           </Map>
         </div>
+        </Col>
+        </Row>
       </div>
-    </div>
+    </Content>
   );
 }
 
 export default GoogleApiWrapper({
   apiKey: process.env.REACT_APP_MAP_KEY,
-})(MapContainer);
+})(NEWCUSTMER);

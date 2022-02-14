@@ -7,10 +7,12 @@ function internalServerError(err) {
     return {
       status: false,
       errorMessage: err.response.data.errorMessage,
+      errorStatus:err.response.status
     };
   }
   return {
     status: false,
+    errorStatus:err.status,
     errorMessage: "Internal server error. Please check your server",
   };
 }

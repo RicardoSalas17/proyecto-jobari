@@ -35,37 +35,44 @@ router.get("/session", (req, res) => {
 });
 
 router.post("/signup", isLoggedOut, (req, res) => {
-  const { username, password } = req.body;
+  const { 
+    username, 
+    password ,
+    apellidoPat,
+    apellidoMat,
+    mail,
+    role,
+    author } = req.body;
 
-  if (!username) {
+  if (!username || !password || !apellidoMat || !apellidoPat || !mail || !role ) {
     return res
       .status(400)
-      .json({ errorMessage: "Please provide your username." });
+      .json({ errorMessage: "Por favor complea todos los campos." });
   }
-
+/*
   if (password.length < 8) {
     return res.status(400).json({
       errorMessage: "Your password needs to be at least 8 characters long.",
     });
-  }
+  }*/
 
   //   ! This use case is using a regular expression to control for special characters and min length
-  /*
+  
   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}/;
 
   if (!regex.test(password)) {
     return res.status(400).json( {
       errorMessage:
-        "Password needs to have at least 8 chars and must contain at least one number, one lowercase and one uppercase letter.",
+        "La contseña necesita tener 8 caracteres y debe contener por lo menos un numero, una minuscula y una mayuscula.",
     });
   }
-  */
+
 
   // Search the database for a user with the username submitted in the form
-  User.findOne({ username }).then((found) => {
+  User.findOne({ mail }).then((found) => {
     // If the user is found, send the message username is taken
     if (found) {
-      return res.status(400).json({ errorMessage: "Username already taken." });
+      return res.status(400).json({ errorMessage: `El correo : ${mail} ya existe` });
     }
 
     // if user is not found, create a new user - start with hashing the password
@@ -77,11 +84,15 @@ router.post("/signup", isLoggedOut, (req, res) => {
         return User.create({
           username,
           password: hashedPassword,
+          apellidoPat,
+          apellidoMat,
+          mail,
+          role
+          //author
         });
       })
       .then((user) => {
-        //console.log(user)
-       Session.create({
+        Session.create({
           user: user._id,
           createdAt: Date.now(),
         }).then((session) => {
@@ -95,7 +106,7 @@ router.post("/signup", isLoggedOut, (req, res) => {
         if (error.code === 11000) {
           return res.status(400).json({
             errorMessage:
-              "Username need to be unique. The username you chose is already in use.",
+              "El correo debe de ser unico. Este coreo ya existe.",
           });
         }
         return res.status(500).json({ errorMessage: error.message });
@@ -104,36 +115,34 @@ router.post("/signup", isLoggedOut, (req, res) => {
 });
 
 router.post("/login", isLoggedOut, (req, res, next) => {
-  const { username, password } = req.body;
-
-  if (!username) {
+  const { mail, password } = req.body;
+  if (!mail) {
     return res
       .status(400)
-      .json({ errorMessage: "Please provide your username." });
+      .json({ errorMessage: "Por favor, introduce tu e-mail" });
   }
-
   // Here we use the same logic as above
   // - either length based parameters or we check the strength of a password
   if (password.length < 8) {
     return res.status(400).json({
-      errorMessage: "Your password needs to be at least 8 characters long.",
+      errorMessage: "La contraseña debe de tener minimo 8 caracteres.",
     });
   }
 
   // Search the database for a user with the username submitted in the form
-  User.findOne({ username })
+  User.findOne({mail})
     .then((user) => {
       // If the user isn't found, send the message that user provided wrong credentials
-      if (!user) {
-        return res.status(400).json({ errorMessage: "Wrong credentials." });
+      if (!mail) {
+        return res.status(400).json({ errorMessage: "Por favor introduce el E-mail" });
       }
-
       // If user is found based on the username, check if the in putted password matches the one saved in the database
       bcrypt.compare(password, user.password).then((isSamePassword) => {
         if (!isSamePassword) {
-          return res.status(400).json({ errorMessage: "Wrong credentials." });
+          console.log("password",isSamePassword)
+          console.log("usrpass", user.password)
+          return res.status(400).json({ errorMessage: "Contraseña incorrecta." });
         }
-        //console.log("user",user)
         Session.create({ user: user._id, createdAt: Date.now() }).then(
           (session) => {
             return(
@@ -142,15 +151,22 @@ router.post("/login", isLoggedOut, (req, res, next) => {
           }
         );
       });
-    })
-
+    }
+    )
     .catch((err) => {
+      User.findOne({mail})
+      .then((user) => {
+        user ===null && res.status(400).json({ errorMessage: "E-mail no existe" }); })
       // in this case we are sending the error handling to the error handling middleware that is defined in the error handling file
       // you can just as easily run the res.status that is commented out below
+      .catch((err)=>{
       next(err);
-      // return res.status(500).render("login", { errorMessage: err.message });
+      return res.status(500).render("login", { errorMessage: err.message });
+      })
     });
 });
+
+
 
 router.delete("/logout", isLoggedIn, (req, res) => {
   Session.findByIdAndDelete(req.headers.authorization)

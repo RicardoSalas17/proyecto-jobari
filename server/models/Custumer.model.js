@@ -8,7 +8,8 @@ const custumerSchema = new Schema(
       unique: true,
     },
     phone:{
-      type:String
+      type:String,
+      unique: true
     },
     email:{
       type:String
@@ -19,15 +20,22 @@ const custumerSchema = new Schema(
       cordinates: {
         type: Object,
       },
-    products:{
-        type: Array
-    },
-    productrequestactive:{
-        type: Array
-    },
-    productrequest:{
-        type: Array
-    },
+      orders:[{
+        type: Schema.ObjectId,
+        ref: "Order"
+      }],
+      products:[{
+        type: Schema.ObjectId,
+        ref: "Product"
+      }],
+      rutes:[{
+        type: Schema.ObjectId,
+        ref: "Route"
+      }],
+      author:{
+        type: Schema.Types.ObjectId,
+        ref: "User"
+      } 
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

@@ -2,9 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import * as PATHS from "../../utils/paths";
-import * as CONSTS from "../../utils/consts";
-import { Layout, Menu, Breadcrumb } from 'antd';
-const { Header, Content, Footer } = Layout;
+import { Layout, Menu } from 'antd';
+const { Header } = Layout;
 const { SubMenu } = Menu;
 
 
@@ -13,8 +12,8 @@ const Navbar = (props) => {
     <>
         {props.user ? (
 <Header className="bcn">
-      <Menu className="bcn" className="navs" theme="dark" mode="horizontal"defaultSelectedKeys={['1']}>
-      <Menu.Item key="3" className="authLink">
+      <Menu  className="navs" theme="dark" mode="horizontal"defaultSelectedKeys={['1']}>
+      <Menu.Item key="31" className="authLink">
               <Link to={PATHS.HOMEPAGE} className="link-style">
              Home
             </Link>
@@ -25,8 +24,12 @@ const Navbar = (props) => {
               Nuevo cliente
               </Link>
               </Menu.Item>
+              <Menu.Item   key="12">
+              <Link className="link-style" to={PATHS.SEEALLCUSTUMER} >
+              Todos los clientes
+              </Link>
+              </Menu.Item>
           </SubMenu>
-
           <SubMenu key="sub2"title="Materias primas">
             <Menu.Item key="2" >
             <Link to={PATHS.NEWMP} className="link-style">
@@ -39,8 +42,6 @@ const Navbar = (props) => {
             </Link>
               </Menu.Item>
           </SubMenu>
-
-
           <SubMenu key="sub3"title="Productos">
             <Menu.Item key="4" className="authLink">
             <Link to={PATHS.NEWPRODUCT} className="link-style">
@@ -53,8 +54,6 @@ const Navbar = (props) => {
             </Link>
               </Menu.Item>
           </SubMenu>
-
-
           <SubMenu key="sub4"title="Empaques">
             <Menu.Item key="6" className="authLink">
             <Link className="btn-nav" to={PATHS.NEWPACKAGE}className="link-style">
@@ -98,7 +97,7 @@ const Navbar = (props) => {
 
         ) : (
             <Header className="bcn">
-          <Menu className="bcn" className="navs" theme="dark" mode="horizontal" >
+          <Menu className="bcn" theme="dark" mode="horizontal" >
           <Menu.Item key="99" className="authLink">
           <Link to={PATHS.SIGNUPPAGE} className="link-style">
               Signup
@@ -111,9 +110,7 @@ const Navbar = (props) => {
             </Menu.Item>
       </Menu>
             </Header>
-
         )}
-
     </>
   );
 };

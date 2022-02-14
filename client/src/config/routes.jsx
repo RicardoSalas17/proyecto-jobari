@@ -1,20 +1,28 @@
 import { Navigate } from "react-router-dom";
 import HomePage from "../pages/HomePage";
-import Login from "../pages/LogIn";
-import Signup from "../pages/Signup";
-import Custumer from "../pages/CustomerRegistration"
+//AUTH
+import Login from "../pages/auth/LogIn";
+import Signup from "../pages/auth/Signup";
+//CUSTUMER
+import NEWCUSTMER from "../pages/custumer/CustomerRegistration"
+import SEEALLCUSTUMER from "../pages/custumer/CustomerView"
+//MP
 import NEWMP from "../pages/MpRguistrer"
+import SEEALLMP from "../pages/MPView"
+//PRODUCT
 import NEWPRODUCT from "../pages/ProductRegistration"
+import SEEALLPRODUCTS from "../pages/ProductsView"
+import SEEPRODUCTDETAIL from "../pages/ProductDetail"
+//PACKAGES
 import NEWPACKAGE from "../pages/PackageRegistration"
+import SEEALLPACKAGES from "../pages/PackagesView"
+//ORDERS
 import NEWORDER from "../pages/OrderRegistration"
 import SEEALLORDERS from "../pages/OrdersView"
-import SEEALLMP from "../pages/MPView"
-import SEEALLPRODUCTS from "../pages/ProductsView"
-import SEEALLPACKAGES from "../pages/PackagesView"
 import SEEORDERDETAIL from "../pages/OrderDetail"
-import SEEPRODUCTDETAIL from "../pages/ProductDetail"
-import SEECALENDAR from "../pages/CalendarView"
+//ROUTES
 import NEWROUTE from "../pages/RouteRegistreation"
+import SEECALENDAR from "../pages/CalendarView"
 import SEEROUTEDETAIL from "../pages/RouteDetail"
 
 import * as PATHS from "../utils/paths";
@@ -41,7 +49,15 @@ const routes = (props) => {
     {
       path: PATHS.NEWCUSTUMER,
       element: user ? (
-        <Custumer {...props} />
+        <NEWCUSTMER {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
+    },
+    {
+      path: PATHS.SEEALLCUSTUMER,
+      element: user ? (
+        <SEEALLCUSTUMER {...props} />
       ) : (
         <Navigate to={PATHS.LOGINPAGE} replace />
       )

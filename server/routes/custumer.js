@@ -6,7 +6,7 @@ getAllCustumers
 } = require("../Controllers/custumercotroller");
 
 
-router.post("/new-custumer", createCustumer);
+router.post("/new-custumer",isLoggedIn ,createCustumer);
 router.get("/get-allcustumer",isLoggedIn, getAllCustumers);
 
 module.exports = router;
