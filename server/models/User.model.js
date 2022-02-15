@@ -47,10 +47,14 @@ const userSchema = new Schema(
       type: Schema.ObjectId,
       ref: "Package"
     }],
+    mp:[{
+      type: Schema.ObjectId,
+      ref: "PrimeMateria"
+    }],
     author:{
       type: Schema.Types.ObjectId,
       ref: "User"
-    } 
+    }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

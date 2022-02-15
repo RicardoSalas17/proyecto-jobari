@@ -7,6 +7,7 @@ function internalServerError(err) {
     return {
       status: false,
       errorMessage: err.response.data.errorMessage,
+      errstatus:err.response.status
     };
   }
   return {
@@ -21,23 +22,34 @@ function successStatus(res) {
     data: res.data,
   };
 }
+const authorization =  {
+  headers: {
+    Authorization: USER_HELPERS.getUserToken(),
+  }
+}
 
 // creates a basic url for every request in this file
-const custumerService = axios.create({
+const mpService = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}/mp`,
 });
 
-export function regisMP(credentials) {
-  return custumerService
-    .post("/new-mp", credentials)
+export function regisMP(formRegisMp) {
+  return mpService
+    .post("/new-mp", formRegisMp, authorization)
     .then(successStatus)
     .catch(internalServerError);
 }
 
 export function getAllMP() {
-  return custumerService
-    .get("/get-allmp")
+  return mpService
+    .get("/get-allmp", authorization)
     .then(successStatus)
     .catch(internalServerError);
 }
 
+export function getMP(id) {
+  return mpService
+    .get(`/mp-detail/${id}`, authorization)
+    .then(successStatus)
+    .catch(internalServerError);
+}

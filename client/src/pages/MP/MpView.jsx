@@ -1,38 +1,42 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate} from "react-router-dom";
-import { getAllClients } from "../../services/custumer";
+import { getAllMP } from "../../services/mp";
+import { useNavigate } from "react-router-dom";
+import * as PATHS from "../../utils/paths";
+import "./mp.scss";
 import { Card, Col, Row, Layout, Breadcrumb, Button } from "antd";
-import "./custumer.scss";
-const { Content } = Layout;
-export default function SEEALLCUSTUMER() {
-  const navigate = useNavigate();
-  const [clientList, setClientList] = useState([]);
 
-  const getAllClientsApp = async () => {
-    getAllClients()
+const { Content } = Layout;
+
+
+export default function SEEALLMP({ authenticate }) {
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+  const [mpList, setMPList] = useState([]);
+
+  const getALLMP = async () => {
+    getAllMP()
       .then((res) => {
-        const custumer = res.data.Custumers;
-        setClientList(custumer);
+        setMPList(res.data.MP);
       })
       .catch((err) => console.log(err));
   };
   useEffect(() => {
-    getAllClientsApp();
+    getALLMP()
   }, []);
 
-  return (
-    <Content style={{ padding: "30px 50px 0 50px " }}>
-      <div className="site-layout-content">
+        return(
+<Content style={{ padding: "30px 50px 0 50px " }}>
+      <div className="site-layout-content-mp">
       <div className="fondo">
         <Breadcrumb style={{ margin: "6vh 0" }}></Breadcrumb>
         <Row gutter={16}>
-            {clientList === [] ? (
+            {mpList === [] ? (
               <div>CARGANDO</div>
             ) : (
-              clientList.map((custumer, indx) => {
+              mpList.map((mp, indx) => {
                 const onClickBut=(e)=>{
                   e.preventDefault()
-                  navigate(`/custumer-detail/${custumer._id}`)
+                  navigate(`/mp-detail/${mp._id}`)
                 }
                 return (
                   <Col key={indx} span={6}>
@@ -40,14 +44,13 @@ export default function SEEALLCUSTUMER() {
                   className="Cards"
                   style={{marginTop: 16 }}
                   key={indx}
-                  title={custumer.custumername}
+                  title={mp.clave}
                     >
-                    <h4>Telefono: {custumer.phone}</h4>
-                    <h4>E-mail: {custumer.email}</h4>
+                    <h4>Nombre: {mp.name}</h4>
                     <Button
                     type="primary"
                     onClick= {onClickBut}
-                  > Detalle del cliente.</Button>
+                  > Detalle de MP.</Button>
                     </Card>
                  </Col>
                 );
@@ -56,6 +59,5 @@ export default function SEEALLCUSTUMER() {
         </Row>
       </div>
     </div>
-    </Content>
-  );
-}
+    </Content>          
+                  )}  

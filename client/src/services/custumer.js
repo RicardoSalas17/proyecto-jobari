@@ -34,7 +34,6 @@ const custumerService = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}/custumer`,
 });
 
-
 export function regisCustumer(credentials) {
   return custumerService
     .post("/new-custumer",credentials,authorization)
@@ -48,6 +47,7 @@ export function getAllClients() {
     .then(successStatus)
     .catch(internalServerError);
 }
+
 export function getCustumer(id) {
   return custumerService
     .get(`/custumer-detail/${id}`, authorization)

@@ -8,12 +8,13 @@ import NEWCUSTMER from "../pages/custumer/CustomerRegistration"
 import SEEALLCUSTUMER from "../pages/custumer/CustomerView"
 import SEECUSTUMERDETAIL from "../pages/custumer/CustumerDetail"
 //MP
-import NEWMP from "../pages/MpRguistrer"
-import SEEALLMP from "../pages/MPView"
+import NEWMP from "../pages/MP/MpRegistration"
+import SEEALLMP from "../pages/MP/MpView"
+import SEEMPDETAIL from "../pages/MP/MpDetail"
 //PRODUCT
-import NEWPRODUCT from "../pages/ProductRegistration"
-import SEEALLPRODUCTS from "../pages/ProductsView"
-import SEEPRODUCTDETAIL from "../pages/ProductDetail"
+import NEWPRODUCT from "../pages/product/ProductRegistration"
+import SEEALLPRODUCTS from "../pages/product/ProductsView"
+import SEEPRODUCTDETAIL from "../pages/product/ProductDetail"
 //PACKAGES
 import NEWPACKAGE from "../pages/PackageRegistration"
 import SEEALLPACKAGES from "../pages/PackagesView"
@@ -40,12 +41,20 @@ const routes = (props) => {
     },
     {
       path: PATHS.SIGNUPPAGE,
-      element: <Signup {...props} />,
+      element: !user ? (
+        <Signup {...props} />
+      ) : (
+        <Navigate to={PATHS.HOMEPAGE} replace />
+      ),
     },
 
     {
       path: PATHS.LOGINPAGE,
-      element: <Login {...props} />,
+      element: !user ? (
+        <Login {...props} />
+      ) : (
+        <Navigate to={PATHS.HOMEPAGE} replace />
+      )
     },
     {
       path: PATHS.NEWCUSTUMER,
@@ -75,6 +84,13 @@ const routes = (props) => {
       path: PATHS.NEWMP,
       element: user ? (
         <NEWMP {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
+    },     {
+      path: PATHS.SEEMPDETAIL,
+      element: user ? (
+        <SEEMPDETAIL {...props} />
       ) : (
         <Navigate to={PATHS.LOGINPAGE} replace />
       )

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { regisOrder } from "../services/order";
 import { useNavigate, Link, useParams } from "react-router-dom";
-import * as PATHS from "../utils/paths";
-import * as USER_HELPERS from "../utils/userToken";
-import { getProduct } from "../services/product.js";
-import "./ordersview.css";
+import * as PATHS from "../../utils/paths";
+import { getProduct } from "../../services/product.js";
+import "./product.scss";
 import { Card, Col, Row } from 'antd';
 
 

@@ -11,6 +11,7 @@ export const NEWPACKAGE ="/new-package";
 export const NEWORDER ="/new-order";
 export const SEEALLORDERS ="/get-allorders";
 export const SEEALLMP="/get-allmp";
+export const SEEMPDETAIL="/mp-detail/:id";
 export const SEEALLPRODUCTS="/get-products";
 export const SEEALLPACKAGES="/get-allpackages";
 export const SEEORDERDETAIL="/order/:id";
