@@ -48,5 +48,11 @@ export function getAllClients() {
     .then(successStatus)
     .catch(internalServerError);
 }
+export function getCustumer(id) {
+  return custumerService
+    .get(`/custumer-detail/${id}`, authorization)
+    .then(successStatus)
+    .catch(internalServerError);
+}
 
 

@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import * as PATHS from "../../utils/paths";
 import { getAllClients } from "../../services/custumer";
-import { Card, Col, Row, Layout, Breadcrumb } from "antd";
+import { Card, Col, Row, Layout, Breadcrumb, Button } from "antd";
 import "./custumer.scss";
 const { Content } = Layout;
 export default function SEEALLCUSTUMER() {
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const [clientList, setClientList] = useState([]);
 
@@ -14,7 +13,6 @@ export default function SEEALLCUSTUMER() {
     getAllClients()
       .then((res) => {
         const custumer = res.data.Custumers;
-        console.log(custumer)
         setClientList(custumer);
       })
       .catch((err) => console.log(err));
@@ -33,9 +31,12 @@ export default function SEEALLCUSTUMER() {
               <div>CARGANDO</div>
             ) : (
               clientList.map((custumer, indx) => {
-                console.log(custumer);
+                const onClickBut=(e)=>{
+                  e.preventDefault()
+                  navigate(`/custumer-detail/${custumer._id}`)
+                }
                 return (
-                  <Col span={6}>
+                  <Col key={indx} span={6}>
                     <Card
                   className="Cards"
                   style={{marginTop: 16 }}
@@ -44,7 +45,10 @@ export default function SEEALLCUSTUMER() {
                     >
                     <h4>Telefono: {custumer.phone}</h4>
                     <h4>E-mail: {custumer.email}</h4>
-                    <Link className="event-button" exact to={`/custumer/${custumer._id}`} type="button" >Detalle de orden</Link>
+                    <Button
+                    type="primary"
+                    onClick= {onClickBut}
+                  > Detalle del cliente.</Button>
                     </Card>
                  </Col>
                 );

@@ -30,7 +30,7 @@ const Navbar = (props) => {
               </Link>
               </Menu.Item>
           </SubMenu>
-          <SubMenu key="sub2"title="Materias primas">
+          <SubMenu key="sub2" title="Materias primas">
             <Menu.Item key="2" >
             <Link to={PATHS.NEWMP} className="link-style">
               Nueva MP
@@ -42,7 +42,7 @@ const Navbar = (props) => {
             </Link>
               </Menu.Item>
           </SubMenu>
-          <SubMenu key="sub3"title="Productos">
+          <SubMenu key="sub3" title="Productos">
             <Menu.Item key="4" className="authLink">
             <Link to={PATHS.NEWPRODUCT} className="link-style">
               Nuevo Producto
@@ -54,9 +54,9 @@ const Navbar = (props) => {
             </Link>
               </Menu.Item>
           </SubMenu>
-          <SubMenu key="sub4"title="Empaques">
+          <SubMenu key="sub4" title="Empaques">
             <Menu.Item key="6" className="authLink">
-            <Link className="btn-nav" to={PATHS.NEWPACKAGE}className="link-style">
+            <Link  to={PATHS.NEWPACKAGE} className="link-style">
               Nuevo Empaque
             </Link>
               </Menu.Item>
@@ -67,7 +67,7 @@ const Navbar = (props) => {
               </Menu.Item>
           </SubMenu>
 
-          <SubMenu key="sub5"title="Ordenes">
+          <SubMenu key="sub5" title="Ordenes">
             <Menu.Item key="8" className="authLink">
             <Link to={PATHS.NEWORDER} className="link-style">
               Nueva Orden
@@ -80,7 +80,7 @@ const Navbar = (props) => {
               </Menu.Item>
           </SubMenu>
 
-          <SubMenu key="sub6"title="Embarques">
+          <SubMenu key="sub6" title="Embarques">
             <Menu.Item key="10" className="authLink">
             <Link to={PATHS.SEECALENDAR} className="link-style">
             Calendario de Rutas

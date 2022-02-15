@@ -64,3 +64,12 @@ exports.createCustumer = async (req, res) => {
     const Custumers = await Custumer.find()
     res.status(200).json({Custumers});
   };
+  
+  exports.getCustumer = async (req, res) => {
+    const { id } = req.params;
+    const custumer = await Custumer.findById(id).populate({
+      path:"orders"}).populate({
+        path:"products"}).populate({
+          path:"rutes"})
+   res.status(200).json(custumer);
+  };

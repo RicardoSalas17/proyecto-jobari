@@ -6,6 +6,7 @@ import Signup from "../pages/auth/Signup";
 //CUSTUMER
 import NEWCUSTMER from "../pages/custumer/CustomerRegistration"
 import SEEALLCUSTUMER from "../pages/custumer/CustomerView"
+import SEECUSTUMERDETAIL from "../pages/custumer/CustumerDetail"
 //MP
 import NEWMP from "../pages/MpRguistrer"
 import SEEALLMP from "../pages/MPView"
@@ -58,6 +59,14 @@ const routes = (props) => {
       path: PATHS.SEEALLCUSTUMER,
       element: user ? (
         <SEEALLCUSTUMER {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
+    },
+    {
+      path: PATHS.SEECUSTUMERDETAIL,
+      element: user ? (
+        <SEECUSTUMERDETAIL {...props} />
       ) : (
         <Navigate to={PATHS.LOGINPAGE} replace />
       )

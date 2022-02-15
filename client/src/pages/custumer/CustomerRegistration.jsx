@@ -112,7 +112,6 @@ else{
           }
           
           if (res.status){
-            console.log(res.data.custumer._id)
             Swal.fire({
             icon: 'success',
             title: `Se creo cliente: ${res.data.custumer.custumername}`,
@@ -340,13 +339,14 @@ else{
           <Map
             google={props.google}
             ref={refMap}
-            defaultCenter={mapDirection}
+            initialCenter={mapDirection}
             zoom={14}
           >
             <Marker position={mapDirection}  name={"Current location"} ref={refMark}/>
           </Map>
         </div>
         </Col>
+
         </Row>
       </div>
     </Content>

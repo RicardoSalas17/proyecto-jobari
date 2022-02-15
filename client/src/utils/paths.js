@@ -4,6 +4,7 @@ export const SIGNUPPAGE = "/auth/signup";
 export const LOGINPAGE = "/auth/login";
 export const NEWCUSTUMER = "/new-custumer";
 export const SEEALLCUSTUMER="/get-allcustumer";
+export const SEECUSTUMERDETAIL="/custumer-detail/:id";
 export const NEWMP ="/new-mp";
 export const NEWPRODUCT ="/new-product";
 export const NEWPACKAGE ="/new-package";

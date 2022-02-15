@@ -6,8 +6,8 @@ import { getLoggedIn, logout } from "./services/auth";
 import routes from "./config/routes";
 import * as USER_HELPERS from "./utils/userToken";
 import React from 'react'
-import { Layout, Menu, Breadcrumb } from 'antd';
-const { Header, Content, Footer } = Layout;
+import { Layout } from 'antd';
+const {  Footer } = Layout;
 
 
 export default function App() {
@@ -55,7 +55,6 @@ export default function App() {
   }
 
   return (
-
         <Layout className="layout" >
       <Navbar handleLogout={handleLogout} user={user} />
       <Routes>
@@ -65,6 +64,5 @@ export default function App() {
       </Routes>
       <Footer style={{ textAlign: 'center', background:"rgb(231, 177, 180) !important"}}>Creado por Luis Ricardo Salas</Footer>
       </Layout>
-
   );
 }
