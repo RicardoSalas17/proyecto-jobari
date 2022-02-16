@@ -12,7 +12,7 @@ const Navbar = (props) => {
     <>
         {props.user ? (
 <Header className="bcn">
-      <Menu  className="navs" theme="dark" mode="horizontal"defaultSelectedKeys={['1']}>
+      <Menu  className="navs" theme="dark" mode="horizontal">
       <Menu.Item key="31" className="authLink">
               <Link to={PATHS.HOMEPAGE} className="link-style">
              Home

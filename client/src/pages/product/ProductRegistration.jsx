@@ -30,8 +30,8 @@ export default function SEEPRODUCTDETAIL(props) {
     name: "",
     clave: "",
     qualityExams: [],
-    MP:[{claveMP:0, porcentaje:0}],
-    productMP:[{claveProduct:0, porcentaje:0}]
+    MP:[{claveMP:0, porcentaje:0, id:""}],
+    productMP:[{claveProduct:0, porcentaje:0, id:""}]
   });
   const { name, clave, qualityExams,MP, productMP} = form;
   const [error, setError] = useState(null);
@@ -55,7 +55,7 @@ export default function SEEPRODUCTDETAIL(props) {
     event.preventDefault();
     let count = counter
     let mpOld = MP
-    mpOld.push({"claveMP":0, "porcentaje":0})
+    mpOld.push({"claveMP":0, "porcentaje":0,"id":""})
     setForm({ ...form, MP: mpOld })
     count++
     setContador(count)
@@ -66,17 +66,17 @@ export default function SEEPRODUCTDETAIL(props) {
     mpOld.splice(indx,1)
    return setForm({ ...form, MP: mpOld })
   }
-  function onChangeSelect(value,contador){
-    let oldFormMpSelect=form 
-     oldFormMpSelect.MP[contador].claveMP = value
-    return setForm(oldFormMpSelect)
+  function onChangeSelect(valuemp,contadormp, i){
+    let oldFormMpSelect=MP 
+    oldFormMpSelect[contadormp].claveMP = valuemp
+    oldFormMpSelect[contadormp].id = i.key
+    return setForm({ ...form, MP: oldFormMpSelect })
    }
- 
    function onChangeSelectPorc(event,index){
      event.preventDefault();
-     let oldFormSelecPorc =form.MP
-     let value =parseFloat(event.target.value)
-     oldFormSelecPorc[index].porcentaje = value
+     let oldFormSelecPorc =MP
+     let valuePor =event.target.value
+     oldFormSelecPorc[index].porcentaje = valuePor
      return setForm({ ...form, MP: oldFormSelecPorc })
    }
 
@@ -97,66 +97,58 @@ export default function SEEPRODUCTDETAIL(props) {
    },[]);
    const addProduct = (event) => {
      event.preventDefault();
-     let count = counterProd
+     let counts = counterProd
      let mpOld = productMP
-     mpOld.push({"claveProduct":0, "porcentaje":0})
+     mpOld.push({"claveProduct":0, "porcentaje":0, "id":""})
      setForm({ ...form, productMP: mpOld })
-     count++
-     setProductContador(count)
+     counts++
+     setProductContador(counts)
    };
    const handleDeleteProduct=(event,insdx) =>{
      event.preventDefault();
-     const productMPL=productMP
-     let mprdOld = productMPL
-     const mprNew = mprdOld.filter(function (item, indx){
-       if(indx !== insdx){
-         return item}
-     })
-    return setForm({ ...form, productMP: mprNew })
-     
+     let productMPL = productMP
+     productMPL.splice(insdx,1)
+    return setForm({ ...form, productMP: productMPL })
    }
-   function onChangeSelectProduct(value,contador){
-     let oldFormProd=form 
-      oldFormProd.productMP[contador].claveProduct = value
-     return setForm(oldFormProd)
+   function onChangeSelectProduct(value,contador,i){
+     let oldFormSP =productMP
+     oldFormSP[contador].claveProduct = value
+     oldFormSP[contador].id = i.key
+    return setForm({ ...form, productMP: oldFormSP })
     }
   
     function onChangeSelectPorcProduct(event,index){
       event.preventDefault();
-      let oldFormP =form.productMP
-      let value =parseFloat(event.target.value)
-      oldFormP[index].porcentaje = value
-      return setForm({ ...form, productMP: oldFormP })
+      let oldFormSelpor = productMP
+      let valPor =parseFloat(event.target.value)
+      oldFormSelpor[index].porcentaje = valPor
+      return setForm({ ...form, productMP: oldFormSelpor })
     }
-
-
 
   function handleInputChange(event) {
     const { name, value } = event.target;
-    if (name === "clave"){
-      let valuesNumber = Number(value)
-     return setForm({ ...form, [name]: valuesNumber});  
-     }
-     else{
      return setForm({ ...form, [name]: value });
+    }
 
-  }
-  }
   function handleFormSubmission() {
    // event.preventDefault();
+   const { user } = props;
     const productRegisForm = {
-      name:name,
-      clave:clave,
+      name,
+      clave,
       qualityExams,
       MP,
-      productMP
+      productMP,
+      author: user._id
     };
-    regisProduct(productRegisForm).then((res) => {
+    console.log("regis------------",productRegisForm)
+   /* regisProduct(productRegisForm).then((res) => {
       if (!res.status) {
-        return setError({ message: "Invalid credentials" });
+        console.log(res)
+        //eturn setError({ message: "Invalid credentials" });
       }
-      navigate(PATHS.NEWMP);
-   });
+      //navigate(PATHS.NEWMP);
+   });*/
   }
 
   const plainOptions = [
@@ -222,7 +214,6 @@ export default function SEEPRODUCTDETAIL(props) {
                   value={clave}
                   onChange={handleInputChange}
                   placeholder="Clave del producto"
-                  type="Number"
                 />
               </Form.Item>
               <Form.Item
@@ -241,7 +232,7 @@ export default function SEEPRODUCTDETAIL(props) {
                 />
               </Form.Item>
 
-
+              <Row key={`clg`}span={24}>
               <Col key={`clg`}span={12}>
               <h1>Materias Primas</h1>
               {!MP ?
@@ -268,7 +259,7 @@ export default function SEEPRODUCTDETAIL(props) {
               key={`mgud${index}`}
               style={{ width: "46%" }}
               placeholder="Selecciona MP"
-              onChange={(e)=>onChangeSelect(e,index)}
+              onChange={(e,i)=>onChangeSelect(e,index,i)}
               name="MP"
               >
                 {!MPList ?
@@ -277,8 +268,8 @@ export default function SEEPRODUCTDETAIL(props) {
                   MPList.map((mp, indx) => 
               {
                 return(
-                  <Option key={`mp${indx}`} value={mp.clave}>
-                  {mp.clave}
+                  <Option key={mp._id} value={mp.clave}>
+                  {MP[ind].claveMP}
                 </Option>)
                   }
                   
@@ -304,27 +295,15 @@ export default function SEEPRODUCTDETAIL(props) {
                   :
                   <br key={`st${index}`}/>
                 }
-              
-
             </Input.Group>
             </Form.Item>
-            
             )})}
             <Form.Item wrapperCol={{ offset: 8, span: 5 }}>
             <Button type="danger"  onClick={(e)=>addMP(e)}>
             Agregar Mp
           </Button>
           </Form.Item>
-              
             </Col>
-
-
-
-
-
-
-
-
             <Col key={`clhhg`}span={12}>
             <h1>Producto MP</h1>
             {!productMP ?
@@ -351,7 +330,7 @@ export default function SEEPRODUCTDETAIL(props) {
             key={`mad${indexprod}`}
             style={{ width: "46%" }}
             placeholder="Selecciona Producto para MP"
-            onChange={(e)=>onChangeSelectProduct(e,indexprod)}
+            onChange={(e,i)=>{onChangeSelectProduct(e,indexprod,i)}}
             name="productMP"
             >
               {!productList ?
@@ -360,8 +339,8 @@ export default function SEEPRODUCTDETAIL(props) {
                 productList.map((product, indx) => 
             {
               return(
-                <Option key={`mep${indx}`} value={product.clave}>
-                {product.clave}
+                <Option key={product._id} value={product.clave}>
+                {productMP[indes].claveProduct}
               </Option>)
                 }
                 
@@ -387,8 +366,6 @@ export default function SEEPRODUCTDETAIL(props) {
                 :
                 <br key={`s2t${indexprod}`}/>
               }
-            
-
           </Input.Group>
           </Form.Item>
           )})}
@@ -398,8 +375,7 @@ export default function SEEPRODUCTDETAIL(props) {
         </Button>
         </Form.Item>
           </Col>
-
-
+          </Row>
               <Form.Item wrapperCol={{ offset: 8, span: 5 }}>
                 <Button type="primary" htmlType="submit">
                   Submit
@@ -412,40 +388,4 @@ export default function SEEPRODUCTDETAIL(props) {
     </Content>
     </div>
   );
-}  /*
-              <Form.Item
-                noStyle
-                rules={[{ required: true, message: "Province is required" }]}
-                name="MP"
-                key={index}
-              >
-<Select
-placeholder="Selecciona MP"
-onChange={(e)=>onChangeSelect(e,index)}
-name="MP"
->
-{MPLists.map(({ clave }) => (
-  <Option key={clave} value={clave}>
-    {clave}{" "}
-  </Option>
-))}
-</Select>
-</Form.Item>
-<Form.Item
-name={["MP", "porcentaje"]}
-noStyle
-rules={[{ required: true, message: "Porcentaje is required" }]}
->
-<Input
-style={{ width: "50%" }}
-placeholder="Porcentaje"
-type="number"
-name="Porcentaje"
-onChange={(e)=>onChangeSelectPorc(e,index)}
-value= {MP[index].porcentaje}
-index={contador}
-/>
-</Form.Item>
-<Button type="danger">
-Eliminar MP
-</Button>*/
+}
