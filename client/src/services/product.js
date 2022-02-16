@@ -22,6 +22,10 @@ function successStatus(res) {
   };
 }
 
+const authorization =  {
+  headers: {
+    Authorization: USER_HELPERS.getUserToken(),
+  }}
 // creates a basic url for every request in this file
 const productService = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}/product`,
@@ -35,7 +39,7 @@ export function regisProduct(credentials) {
 }
 export function getAllProducts() {
   return productService
-    .get("/get-products")
+    .get("/get-products",authorization)
     .then(successStatus)
     .catch(internalServerError);
 }

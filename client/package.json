@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ant-design/icons": "^4.7.0",
     "@googlemaps/react-wrapper": "^1.1.15",
     "antd": "^4.17.2",
     "axios": "^0.24.0",

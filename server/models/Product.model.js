@@ -11,9 +11,10 @@ const productSchema = new Schema(
         type: String,
         unique: true
       },
-    clients:{
-        type: Array
-    },
+    clients:[{
+      type: Schema.ObjectId,
+      ref: "Custumer"
+    }],
     amountStock:{
         type: Number,
     },
@@ -24,8 +25,17 @@ const productSchema = new Schema(
     qualityExams:{
         type: Array
     },
-    MP:{
-      type: Array
+    MP:[{
+      type: Schema.ObjectId,
+      ref: "PrimeMateria"
+    }],
+    productMP:[{
+      type: Schema.ObjectId,
+      ref: "Product"
+    }],
+    author:{
+      type: Schema.Types.ObjectId,
+      ref: "User"
     }
   },
   {
