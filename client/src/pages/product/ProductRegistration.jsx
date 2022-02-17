@@ -30,8 +30,8 @@ export default function SEEPRODUCTDETAIL(props) {
     name: "",
     clave: "",
     qualityExams: [],
-    MP:[{claveMP:0, porcentaje:0, id:""}],
-    productMP:[{claveProduct:0, porcentaje:0, id:""}]
+    MP:[{clave:0, porcentaje:0, id:""}],
+    productMP:[{clave:0, porcentaje:0, id:""}]
   });
   const { name, clave, qualityExams,MP, productMP} = form;
   const [error, setError] = useState(null);
@@ -55,7 +55,7 @@ export default function SEEPRODUCTDETAIL(props) {
     event.preventDefault();
     let count = counter
     let mpOld = MP
-    mpOld.push({"claveMP":0, "porcentaje":0,"id":""})
+    mpOld.push({"clave":0, "porcentaje":0,"id":""})
     setForm({ ...form, MP: mpOld })
     count++
     setContador(count)
@@ -68,7 +68,7 @@ export default function SEEPRODUCTDETAIL(props) {
   }
   function onChangeSelect(valuemp,contadormp, i){
     let oldFormMpSelect=MP 
-    oldFormMpSelect[contadormp].claveMP = valuemp
+    oldFormMpSelect[contadormp].clave = valuemp
     oldFormMpSelect[contadormp].id = i.key
     return setForm({ ...form, MP: oldFormMpSelect })
    }
@@ -99,7 +99,7 @@ export default function SEEPRODUCTDETAIL(props) {
      event.preventDefault();
      let counts = counterProd
      let mpOld = productMP
-     mpOld.push({"claveProduct":0, "porcentaje":0, "id":""})
+     mpOld.push({"clave":0, "porcentaje":0, "id":""})
      setForm({ ...form, productMP: mpOld })
      counts++
      setProductContador(counts)
@@ -112,7 +112,7 @@ export default function SEEPRODUCTDETAIL(props) {
    }
    function onChangeSelectProduct(value,contador,i){
      let oldFormSP =productMP
-     oldFormSP[contador].claveProduct = value
+     oldFormSP[contador].clave = value
      oldFormSP[contador].id = i.key
     return setForm({ ...form, productMP: oldFormSP })
     }
@@ -120,7 +120,7 @@ export default function SEEPRODUCTDETAIL(props) {
     function onChangeSelectPorcProduct(event,index){
       event.preventDefault();
       let oldFormSelpor = productMP
-      let valPor =parseFloat(event.target.value)
+      let valPor =event.target.value
       oldFormSelpor[index].porcentaje = valPor
       return setForm({ ...form, productMP: oldFormSelpor })
     }
@@ -142,13 +142,13 @@ export default function SEEPRODUCTDETAIL(props) {
       author: user._id
     };
     console.log("regis------------",productRegisForm)
-   /* regisProduct(productRegisForm).then((res) => {
+    regisProduct(productRegisForm).then((res) => {
       if (!res.status) {
         console.log(res)
         //eturn setError({ message: "Invalid credentials" });
       }
       //navigate(PATHS.NEWMP);
-   });*/
+   });
   }
 
   const plainOptions = [
@@ -269,7 +269,7 @@ export default function SEEPRODUCTDETAIL(props) {
               {
                 return(
                   <Option key={mp._id} value={mp.clave}>
-                  {MP[ind].claveMP}
+                  {MP[ind].clave}
                 </Option>)
                   }
                   
@@ -340,7 +340,7 @@ export default function SEEPRODUCTDETAIL(props) {
             {
               return(
                 <Option key={product._id} value={product.clave}>
-                {productMP[indes].claveProduct}
+                {productMP[indes].clave}
               </Option>)
                 }
                 
