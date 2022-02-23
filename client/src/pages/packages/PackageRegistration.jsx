@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { regisMP } from "../../services/mp";
+import { regisPackage } from "../../services/packages";
 import { useNavigate } from "react-router-dom";
-import "./mp.scss";
+import "./packages.scss";
 import * as PATHS from "../../utils/paths";
 import {
-  Checkbox,
   Layout,
   Breadcrumb,
   Form,
@@ -14,66 +13,60 @@ import {
   Button,
 } from "antd";
 import Swal from "sweetalert2";
-import "./mp.scss";
+
+
 const { Content } = Layout;
 export default function Custumer(props) {
   const [form, setForm] = useState({
-    name: "",
+    name:"",
     clave: "",
-    qualityExams: [],
+    capacity:0 ,
   });
-  const { name, clave, qualityExams } = form;
+  const { name, clave, capacity } = form;
   const navigate = useNavigate();
 
-  function handleInputChange(event) {
-    const { name, value } = event.target;
-    if (name === "clave"){
-      let valuesNumber = Number(value)
-     return setForm({ ...form, [name]: valuesNumber});  
-     }
-     else{
-     return setForm({ ...form, [name]: value });
-     }
+function handleInputChange(event) {
+  const { name, value } = event.target;
+  if(name==="capacity"){
+const values= parseInt(value)
+return setForm({ ...form, [name]: values });
+  }
+return setForm({ ...form, [name]: value });
+
   }
 
   function handleFormSubmission() {
     const { user } = props;
-    const formRegisMp = {
+    const formRegisPackages = {
       name,
       clave,
-      qualityExams,
+      capacity,
       author: user._id,
     };
-
+console.log("formRegisPackages",formRegisPackages)
+    
     if (name === "" || clave === "") {
       Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Por favor, llena todos los campos",
       });
-    }    else if(!clave){
+    }    else if(!capacity){
       Swal.fire({
         icon: 'error',
         title: 'Error al ingresar Clave',
-        text: "Por favor, llena el campo clave solo con numeros y sin espacios"
+        text: "Por favor, llena el campo de capacidad solo con numeros y sin espacios"
       })
-    } 
-    else if (qualityExams.length === 0) {
+    }  else {
       Swal.fire({
-        icon: "error",
-        title: "Error al ingresar Pruebas de calidad",
-        text: "Por favor, selecciona las pruebas de calidad",
-      });
-    } else {
-      Swal.fire({
-        title: `Se creara un cliente con la clave : ${clave}, Quieres continuar?`,
+        title: `Se creara un empaque con la clave : ${clave}, Quieres continuar?`,
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Guardar",
         denyButtonText: `No guardar`,
       }).then((result) => {
         if (result.isConfirmed) {
-          regisMP(formRegisMp).then((res) => {
+          regisPackage(formRegisPackages).then((res) => {
             if (!res.status) {
               res.errstatus === 400 &&
                 Swal.fire({
@@ -92,12 +85,12 @@ export default function Custumer(props) {
             if (res.status) {
             Swal.fire({
             icon: 'success',
-            title: `Se creo Materia Prima: ${res.data.Mp.name}`,
+            title: `Se creo Empaque: ${res.data.name}`,
             showConfirmButton: false,
             timer: 1500
     })
-    navigate(`${PATHS.SEEALLMP}`);
-   // navigate(`${PATHS.SEEALLPRODUCTS}/${res.data.Mp._id}`);
+   // navigate(`${PATHS.SEEALLPACKAGES}`);
+    navigate(`/packages-detail/${res.data._id}`);
   }
           });
         } else if (result.isDenied) {
@@ -107,25 +100,14 @@ export default function Custumer(props) {
     }
   }
 
-  const plainOptions = [
-    "IR",
-    "Densidad aparente",
-    "Humedad",
-    "Apariencia",
-    "Sabor",
-    "PH",
-  ];
 
-  function onChange(checkedValues) {
-    return setForm({ ...form, qualityExams: checkedValues });
-  }
 
   return (
     <Content style={{ padding: "30px 50px 1px 50px " }}>
       <div className="site-layout-content">
         <Row>
           <Col span={24}>
-            <h1>Nueva MP</h1>
+            <h1>Nuevo Empaque</h1>
           </Col>
         </Row>
         <Row justify="center" align="center">
@@ -140,11 +122,11 @@ export default function Custumer(props) {
               onFinish={handleFormSubmission}
             >
               <Form.Item
-                label="Nombre de la materia prima:"
+                label="Nombre del empaque:"
                 rules={[
                   {
                     required: true,
-                    message: "Porfacor escribe el Nombre del cliete.",
+                    message: "Porfavor escribe el Nombre del empaque.",
                   },
                 ]}
               >
@@ -160,7 +142,7 @@ export default function Custumer(props) {
                 rules={[
                   {
                     required: true,
-                    message: "Porfacor escribe el Nombre del cliete.",
+                    message: "Porfavor escribe la clave del empaque.",
                   },
                 ]}
               >
@@ -168,22 +150,25 @@ export default function Custumer(props) {
                   name="clave"
                   value={clave}
                   onChange={handleInputChange}
-                  placeholder="Clave de la materia prima"
+                  placeholder="Clave del empaque"
                 />
               </Form.Item>
+
               <Form.Item
-                label="Pruebas de Calidad:"
+                label="Capacidad:"
                 rules={[
                   {
                     required: true,
-                    message: "Minimo una prueba",
+                    message: "Porfavor escribe la capacidad.",
                   },
                 ]}
               >
-                <Checkbox.Group
-                  name="qualityExams"
-                  options={plainOptions}
-                  onChange={onChange}
+                <Input
+                  name="capacity"
+                  value={capacity}
+                  onChange={handleInputChange}
+                  placeholder="Capacidad del empaque"
+                  type="parseInt"
                 />
               </Form.Item>
               <Form.Item wrapperCol={{ offset: 8, span: 5 }}>
@@ -196,5 +181,6 @@ export default function Custumer(props) {
         </Row>
       </div>
     </Content>
-  );
-}
+      );
+    }
+    

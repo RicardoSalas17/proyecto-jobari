@@ -17,8 +17,9 @@ import NEWPRODUCT from "../pages/product/ProductRegistration"
 import SEEALLPRODUCTS from "../pages/product/ProductsView"
 import SEEPRODUCTDETAIL from "../pages/product/ProductDetail"
 //PACKAGES
-import NEWPACKAGE from "../pages/PackageRegistration"
-import SEEALLPACKAGES from "../pages/PackagesView"
+import NEWPACKAGE from "../pages/packages/PackageRegistration"
+import SEEALLPACKAGES from "../pages/packages/PackagesView"
+import SEEPACKAGESDETAIL from "../pages/packages/PackagesDetail"
 //ORDERS
 import NEWORDER from "../pages/orders/OrderRegistration"
 import SEEALLORDERS from "../pages/orders/OrdersView"
@@ -137,6 +138,14 @@ const routes = (props) => {
       path: PATHS.SEEALLMP,
       element: user ? (
         <SEEALLMP {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
+    }, 
+    {
+      path: PATHS.SEEPACKAGESDETAIL,
+      element: user ? (
+        <SEEPACKAGESDETAIL {...props} />
       ) : (
         <Navigate to={PATHS.LOGINPAGE} replace />
       )

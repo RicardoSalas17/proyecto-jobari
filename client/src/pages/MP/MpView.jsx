@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { getAllMP } from "../../services/mp";
 import { useNavigate } from "react-router-dom";
-import * as PATHS from "../../utils/paths";
 import "./mp.scss";
 import { Card, Col, Row, Layout, Breadcrumb, Button } from "antd";
 
 const { Content } = Layout;
 
 
-export default function SEEALLMP({ authenticate }) {
-  const [error, setError] = useState(null);
+export default function SEEALLMP() {
   const navigate = useNavigate();
   const [mpList, setMPList] = useState([]);
 

@@ -7,6 +7,7 @@ function internalServerError(err) {
     return {
       status: false,
       errorMessage: err.response.data.errorMessage,
+      errstatus:err.response.status
     };
   }
   return {
@@ -22,6 +23,12 @@ function successStatus(res) {
   };
 }
 
+const authorization =  {
+  headers: {
+    Authorization: USER_HELPERS.getUserToken(),
+  }}
+
+
 // creates a basic url for every request in this file
 const packageServices = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}/package`,
@@ -29,14 +36,20 @@ const packageServices = axios.create({
 
 export function regisPackage(credentials) {
   return packageServices
-    .post("/new-package", credentials)
+    .post("/new-package",credentials, authorization)
     .then(successStatus)
     .catch(internalServerError);
 }
 export function getAllPackages() {
   return packageServices
-    .get("/get-allpackages")
+    .get("/get-allpackages", authorization)
     .then(successStatus)
     .catch(internalServerError);
 }
 
+export function getPackage(id) {
+  return packageServices
+    .get(`/package-detail/${id}`, authorization)
+    .then(successStatus)
+    .catch(internalServerError);
+}

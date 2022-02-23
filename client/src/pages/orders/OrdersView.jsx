@@ -6,6 +6,7 @@ import * as USER_HELPERS from "../../utils/userToken";
 import { getAllOrders } from "../../services/order";
 import "./orders.scss";
 import { Card, Col, Row } from 'antd';
+import "./order.scss";
 
 
 
