@@ -35,7 +35,7 @@ const productService = axios.create({
 
 export function regisProduct(credentials) {
   return productService
-    .post("/new-product", credentials)
+    .post("/new-product", credentials,authorization)
     .then(successStatus)
     .catch(internalServerError);
 }
@@ -48,7 +48,7 @@ export function getAllProducts() {
 
 export function getProduct(id) {
   return productService
-    .get(`/product-detail/${id}`)
+    .get(`/product-detail/${id}`, authorization)
     .then(successStatus)
     .catch(internalServerError);
 }

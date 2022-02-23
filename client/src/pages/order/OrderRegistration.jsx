@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { regisOrder } from "../services/order";
+import { regisOrder } from "../../services/order";
 import { useNavigate } from "react-router-dom";
-import * as PATHS from "../utils/paths";
-import * as USER_HELPERS from "../utils/userToken";
+import * as PATHS from "../../utils/paths";
+import * as USER_HELPERS from "../../utils/userToken";
 import { Checkbox } from "antd";
-import InputMP from "../components/inputMP/inputMP";
-import { getAllMP } from "../services/mp";
-import { getAllClients } from "../services/custumer";
-import { getAllProducts } from "../services/product";
-import { getAllPackages } from "../services/packages";
+import InputMP from "../../components/inputMP/inputMP";
+import { getAllMP } from "../../services/mp";
+import { getAllClients } from "../../services/custumer";
+import { getAllProducts } from "../../services/product";
+import { getAllPackages } from "../../services/packages";
+import "./order.scss";
 
 
 

@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from "react";
 import {  useParams } from "react-router-dom";
-import { getProduct } from "../../services/product";
+import { getPackage } from "../../services/packages";
 import { Col, Row, Skeleton, Layout, Breadcrumb } from 'antd';
-import "./product.scss";
+import "./packages.scss";
 const { Content } = Layout;
 
-export default function SEEPRODCTDETAIL(props) {
-  const [ProductData, setMPData] = useState({});
+export default function SEEPACKAGEDETAIL() {
+  const [PackageData, setPackageData] = useState({});
   const {id} = useParams()
 
-  const getOneProduct = async () => {
-     getProduct(id)
+  const getOnePackage = async () => {
+     getPackage(id)
       .then((res) => {
           const data = res.data
-
-         return setMPData(data)
+         return setPackageData(data)
       })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    getOneProduct()
+    getOnePackage()
   },[]);
 
         return(
@@ -28,23 +27,23 @@ export default function SEEPRODCTDETAIL(props) {
       <div className="site-layout-content">
       <Row>
       <Col span={24}>
-            <h1>Producto</h1>
+            <h1>Empaque</h1>
           </Col>
           </Row>
       <Row className="for">
         <Breadcrumb style={{ margin: "6vh 0" }}></Breadcrumb>
 
-        {!ProductData.clave ?
+        {!PackageData.clave ?
             <Col className="formAuth" span={24}>
           <Skeleton></Skeleton>
           </Col>
           :
           <Col className="formAuth" span={24}>
-        <h2>Nombre: {ProductData.name}</h2>
-        <h2>Clave: {ProductData.clave}</h2>
+        <h2>Nombre: {PackageData.name}</h2>
+        <h2>Clave: {PackageData.clave}</h2>
+        <h2>Capacidad: {PackageData.capacity}</h2>
           </Col>}
         </Row>
       </div>
     </Content>
                  )}
-

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { regisOrder } from "../services/order";
+import { regisOrder } from "../../services/order";
 import { useNavigate, Link } from "react-router-dom";
-import * as PATHS from "../utils/paths";
-import * as USER_HELPERS from "../utils/userToken";
-import { getAllOrders } from "../services/order";
-import "./ordersview.css";
+import * as PATHS from "../../utils/paths";
+import * as USER_HELPERS from "../../utils/userToken";
+import { getAllOrders } from "../../services/order";
 import { Card, Col, Row } from 'antd';
+import "./order.scss";
 
 
 

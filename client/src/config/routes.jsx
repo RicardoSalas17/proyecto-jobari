@@ -16,12 +16,13 @@ import NEWPRODUCT from "../pages/product/ProductRegistration"
 import SEEALLPRODUCTS from "../pages/product/ProductsView"
 import SEEPRODUCTDETAIL from "../pages/product/ProductDetail"
 //PACKAGES
-import NEWPACKAGE from "../pages/PackageRegistration"
-import SEEALLPACKAGES from "../pages/PackagesView"
+import NEWPACKAGE from "../pages/packages/PackageRegistration"
+import SEEALLPACKAGES from "../pages/packages/PackagesView"
+import SEEPACKAGESDETAIL from "../pages/packages/PackagesDetail"
 //ORDERS
-import NEWORDER from "../pages/OrderRegistration"
-import SEEALLORDERS from "../pages/OrdersView"
-import SEEORDERDETAIL from "../pages/OrderDetail"
+import NEWORDER from "../pages/order/OrderRegistration"
+import SEEALLORDERS from "../pages/order/OrdersView"
+import SEEORDERDETAIL from "../pages/order/OrderDetail"
 //ROUTES
 import NEWROUTE from "../pages/RouteRegistreation"
 import SEECALENDAR from "../pages/CalendarView"
@@ -133,6 +134,14 @@ const routes = (props) => {
       path: PATHS.SEEALLMP,
       element: user ? (
         <SEEALLMP {...props} />
+      ) : (
+        <Navigate to={PATHS.LOGINPAGE} replace />
+      )
+    }, 
+    {
+      path: PATHS.SEEPACKAGESDETAIL,
+      element: user ? (
+        <SEEPACKAGESDETAIL {...props} />
       ) : (
         <Navigate to={PATHS.LOGINPAGE} replace />
       )

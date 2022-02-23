@@ -17,7 +17,10 @@ const primeMateriaSchema = new Schema(
     amountStock:{
         type: Number,
     },
-
+    products:[{
+      type: Schema.ObjectId,
+      ref: "Product"
+    }],
     lotes:{
         type: Array
     },

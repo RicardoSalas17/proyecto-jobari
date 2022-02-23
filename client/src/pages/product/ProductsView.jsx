@@ -1,53 +1,61 @@
 import React, { useState, useEffect } from "react";
 import { getAllProducts } from "../../services/product";
-import { useNavigate, Link} from "react-router-dom";
-import * as PATHS from "../../utils/paths";
-import { getAllOrders } from "../../services/mp";
+import { useNavigate } from "react-router-dom";
 import "./product.scss";
-import { Card, Col, Row } from 'antd';
+import { Card, Col, Row, Layout, Breadcrumb, Button } from "antd";
 
+const { Content } = Layout;
 
-
-export default function SEEALLPRODUCTS({ authenticate }) {
-  const [error, setError] = useState(null);
+export default function SEEALLPRODUCTS() {
   const navigate = useNavigate();
-  const [productsList, setProductsList] = useState([]);
+  const [producList, setProductList] = useState([]);
 
-  const getALLgetAllProduct = async () => {
+  const getALLProducts = async () => {
     getAllProducts()
-      .then((res) => { 
-          //console.log(res.data.AllProducts[0].MP)
-        setProductsList(res.data.AllProducts);
+      .then((res) => {
+        setProductList(res.data.AllProducts);
       })
       .catch((err) => console.log(err));
   };
   useEffect(() => {
-    getALLgetAllProduct()
+    getALLProducts();
   }, []);
 
-        return(
-<div className="site-card-wrapper">
-<Row gutter={16}>
-  <Col span={8}>
-  {productsList.map((product,indx) => 
-
-   <Col span={30} key={indx}>                
-                  <Card title={product.clave} bordered={true}>
-                      <p>Nombre:{product.name}</p>
-                      <p>Materia Prima:</p>
-                        {!product.MP ? <p>cargndo</p>: 
-                        product.MP.map((mp,idex)=>
-                        <p key={idex}>{mp.claveMP}</p>
-                        )
-                        }
-                        <Link className="event-button" exact to={`/product/${product._id}`} type="button" >Detalle</Link>
-                </Card>
-                <br />
+  return (
+    <Content style={{ padding: "30px 50px 0 50px " }}>
+      <div className="site-layout-content-mp">
+        <div className="fondo">
+          <Breadcrumb style={{ margin: "6vh 0" }}></Breadcrumb>
+          <Row gutter={16}>
+            {producList === [] ? (
+              <div>CARGANDO</div>
+            ) : (
+              producList.map((product, indx) => {
+                const onClickBut = (e) => {
+                  e.preventDefault();
+                  navigate(`/product-detail/${product._id}`);
+                };
+                return (
+                  <Col key={indx} span={6}>
+                    <Card
+                      className="Cards"
+                      style={{ marginTop: 16 }}
+                      key={indx}
+                      title={product.clave}
+                    >
+                      <h4>Nombre: {product.name}</h4>
+                      <Button type="primary" onClick={onClickBut}>
+                        {" "}
+                        Detalle del producto.
+                      </Button>
+                    </Card>
                   </Col>
-
-                )
-            }
-  </Col>
-</Row>
-</div>            
-                  )}  
+                );
+              })
+            )}
+          </Row>
+        </div>
+      </div>
+    </Content>
+  );
+}

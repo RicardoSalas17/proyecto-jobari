@@ -36,7 +36,11 @@ const productSchema = new Schema(
     author:{
       type: Schema.Types.ObjectId,
       ref: "User"
-    }
+    },
+    MPfor:[{
+      type: Schema.ObjectId,
+      ref: "PrimeMateria"
+    }],
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
