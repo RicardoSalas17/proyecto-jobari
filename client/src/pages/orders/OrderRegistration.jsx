@@ -1,20 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { regisOrder } from "../services/order";
+import { regisOrder } from "../../services/order";
 import { useNavigate } from "react-router-dom";
-import * as PATHS from "../utils/paths";
-import * as USER_HELPERS from "../utils/userToken";
-import { Checkbox } from "antd";
-import InputMP from "../components/inputMP/inputMP";
-import { getAllMP } from "../services/mp";
-import { getAllClients } from "../services/custumer";
-import { getAllProducts } from "../services/product";
-import { getAllPackages } from "../services/packages";
+import * as PATHS from "../../utils/paths";
+import { getAllMP } from "../../services/mp";
+import { getAllClients } from "../../services/custumer";
+import { getAllProducts } from "../../services/product";
+import { getAllPackages } from "../../services/packages";
+import "./orders.scss";
+import {
+  Checkbox,
+  Layout,
+  Breadcrumb,
+  Form,
+  Col,
+  Row,
+  Input,
+  Button,
+  Select
+} from "antd";
+import Swal from "sweetalert2"
+const { Content } = Layout;
 
-
-
-import { Form, Input, Select } from "antd";
-
-export default function Oder({ authenticate }) {
+export default function Oder(props) {
   const [form, setForm] = useState({
     orderNumber: "",
     client: "",
@@ -113,8 +120,6 @@ export default function Oder({ authenticate }) {
       if (!res.status) {
         return setError({ message: "Invalid credentials" });
       }
-      USER_HELPERS.setUserToken(res.data.accessToken);
-      authenticate(res.data.user);
       navigate(PATHS.SEECALENDAR);
    });
   }
@@ -142,7 +147,7 @@ export default function Oder({ authenticate }) {
     name === "monto" ? newArray[index].monto=value:
     
     name === "amount" ? newArray[index].amount=value:
-   // console.log("hola")
+ 
 
     console.log("newwwwsasasaaswarrarrrr",newArray)
 
@@ -151,7 +156,69 @@ export default function Oder({ authenticate }) {
 
   return (
     <div>
-      <h1>Nuevo Pedido</h1>
+
+
+
+    <Content style={{ padding: "30px 50px 1px 50px " }}>
+      <div className="site-layout-content">
+        <Row>
+          <Col span={24}>
+          <h1>Nuevo Pedido</h1>
+          </Col>
+        </Row>
+        <Row justify="center" align="center">
+          <Breadcrumb style={{ margin: "6vh 0" }}></Breadcrumb>
+          <Col className="formAuth" span={24}>
+            <Form
+              name="basic"
+              labelCol={{ span: 7 }}
+              wrapperCol={{ span: 8 }}
+              initialValues={{ remember: true }}
+              autoComplete="off"
+              onFinish={handleFormSubmission}
+            >
+              <Form.Item
+                label="Numero de Orden:"
+                rules={[
+                  {
+                    required: true,
+                    message: "Porfavor escribe el Numero de orden.",
+                  },
+                ]}
+              >
+                <Input
+                  name="orderNumber"
+                  value={orderNumber}
+                  onChange={handleInputChange}
+                  placeholder="Numero de orden"
+                />
+              </Form.Item>
+              <Form.Item wrapperCol={{ offset: 8, span: 5 }}>
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </Form.Item>
+            </Form>
+          </Col>
+        </Row>
+      </div>
+    </Content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <form className="signup__form">
         <label htmlFor="input-username">Numero de Orden:</label>
         <input

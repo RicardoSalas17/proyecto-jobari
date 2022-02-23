@@ -1,15 +1,25 @@
 import React from "react";
-import "./Loading.css";
+import "./Loading.scss";
 
 const LoadingComponent = () => {
-  return (
-    <div className="wrapper">
-      <div className="spinner">
-        <div className="bounce1"></div>
-        <div className="bounce2"></div>
-        <div className="bounce3"></div>
-      </div>
-    </div>
+  return (<>
+    <div className="dots">
+    <div className="dot"></div>
+    <div className="dot"></div>
+    <div className="dot"></div>
+    <div className="dot"></div>
+    <div className="dot"></div>
+</div>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+<defs>
+  <filter id="goo">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="12" result="blur" />
+    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+    <feBlend in="SourceGraphic" in2="goo" />
+  </filter>
+</defs>
+</svg>
+</>
   );
 };
 

@@ -100,7 +100,6 @@ export default function Signup(props) {
                 showConfirmButton: false,
                 timer: 1500,
               });
-              navigate(PATHS.SEEALLPRODUCTS);
               navigate(PATHS.LOGINPAGE);
             }
           });

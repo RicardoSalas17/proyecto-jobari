@@ -1,0 +1,117 @@
+.contentsMain {
+  display: flex;
+  justify-content: center;
+  margin-top: 13vh !important;
+
+  .contentStyle {
+    color: #0000 !important;
+    line-height: 50px !important;
+    text-align: center;
+    height: 80vh !important;
+  }
+
+  .carousel {
+    display: flex;
+    justify-content: center;
+    width: 100vw !important;
+
+    ul {
+      height: 3vh !important;
+      opacity: 0.4;
+      background-color: gray !important;
+      width: 8%;
+      margin-left: 45% !important;
+    }
+
+    li {
+      height: 100% !important;
+      border-radius: 20px;
+    }
+
+    button {
+      background-color: red !important;
+      height: 100% !important;
+    }
+  }
+  .back-one {
+    background-image: url("../../assets/images/various-food-colors-fruits-vegetables.jpeg") !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh !important;
+    width: 208vh !important;
+  }
+  .back-two {
+    background-image: url("../../assets/images/FruitColors.jpeg") !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh !important;
+    width: 208vh !important;
+  }
+  .back-thre {
+    background-image: url("../../assets/images/close-up-colorful-macarons-dessert-with-vintage-pastel-tones-J29WN3.jpeg") !important;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh !important;
+    width: 208vh !important;
+  }
+  .back-four {
+    background-image: url("../../assets/images/1593188904648-1024x483.jpeg") !important;
+    background-repeat: repeat;
+    background-size: cover;
+    height: 100vh !important;
+    width: 208vh !important;
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh !important;
+    width: 208vh !important;
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .title {
+    font-size: 10vw;
+    color: white;
+  }
+
+  #stop-one {
+    stop-color: rgb(253, 253, 253);
+  }
+
+  #stop-two {
+    stop-color: rgb(253, 16, 16);
+  }
+
+  .back {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
+
+  .Logo {
+    position: absolute;
+    margin-top: 180px;
+    margin-left: 120px;
+    z-index: 100;
+    width: 200px;
+    height: 150px;
+  }
+
+  svg {
+    position: absolute;
+    z-index: 10;
+  }
+}
+
+.canvasclass {
+  height: 100vh !important;
+  width: 208vh !important;
+  opacity: 1;
+}

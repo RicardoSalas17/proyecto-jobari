@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./Navbar.css";
+import "./Navbar.scss";
 import * as PATHS from "../../utils/paths";
 import { Layout, Menu } from 'antd';
 const { Header } = Layout;
@@ -98,6 +98,26 @@ const Navbar = (props) => {
         ) : (
             <Header className="bcn">
           <Menu className="bcn" theme="dark" mode="horizontal" >
+          {/*<Menu.Item key="99" className="authLink">
+          <Link className="link-style">
+              Productos
+            </Link>
+            </Menu.Item>
+            <Menu.Item key="99" className="authLink">
+            <Link className="link-style">
+                Servicios
+              </Link>
+              </Menu.Item>
+              <Menu.Item key="99" className="authLink">
+              <Link className="link-style">
+                  Conócenos
+                </Link>
+                </Menu.Item>
+                <Menu.Item key="99" className="authLink">
+                <Link className="link-style">
+                    Contacto
+                  </Link>
+        </Menu.Item>*/}
           <Menu.Item key="99" className="authLink">
           <Link to={PATHS.SIGNUPPAGE} className="link-style">
               Signup

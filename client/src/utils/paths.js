@@ -1,4 +1,5 @@
-export const HOMEPAGE = "/";
+export const HOMEPAGE = "/regishome";
+export const HomePageInfo ="/"
 export const MAPS = "/maps";
 export const SIGNUPPAGE = "/auth/signup";
 export const LOGINPAGE = "/auth/login";

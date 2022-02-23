@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import * as PATHS from "../utils/paths";
 import * as USER_HELPERS from "../utils/userToken";
 import { getAllPackages } from "../services/packages";
-import "./ordersview.css";
+
 import { Card, Col, Row } from 'antd';
 
 

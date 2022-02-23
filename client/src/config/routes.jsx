@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import HomePage from "../pages/HomePage";
+import HomePageInfo from "../pages/infoPages/HomeInfo"
 //AUTH
 import Login from "../pages/auth/LogIn";
 import Signup from "../pages/auth/Signup";
@@ -19,9 +20,9 @@ import SEEPRODUCTDETAIL from "../pages/product/ProductDetail"
 import NEWPACKAGE from "../pages/PackageRegistration"
 import SEEALLPACKAGES from "../pages/PackagesView"
 //ORDERS
-import NEWORDER from "../pages/OrderRegistration"
-import SEEALLORDERS from "../pages/OrdersView"
-import SEEORDERDETAIL from "../pages/OrderDetail"
+import NEWORDER from "../pages/orders/OrderRegistration"
+import SEEALLORDERS from "../pages/orders/OrdersView"
+import SEEORDERDETAIL from "../pages/orders/OrderDetail"
 //ROUTES
 import NEWROUTE from "../pages/RouteRegistreation"
 import SEECALENDAR from "../pages/CalendarView"
@@ -33,11 +34,14 @@ import React from 'react'
 
 const routes = (props) => {
   const { user } = props;
-//  console.log(user)
   return [
     {
       path: PATHS.HOMEPAGE,
       element: <HomePage {...props} />,
+    },
+    {
+      path: PATHS.HomePageInfo,
+      element: <HomePageInfo {...props} />,
     },
     {
       path: PATHS.SIGNUPPAGE,

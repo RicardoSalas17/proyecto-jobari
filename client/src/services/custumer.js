@@ -54,5 +54,3 @@ export function getCustumer(id) {
     .then(successStatus)
     .catch(internalServerError);
 }
-
-
