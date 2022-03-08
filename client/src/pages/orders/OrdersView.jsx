@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { regisOrder } from "../../services/order";
-import { useNavigate, Link } from "react-router-dom";
-import * as PATHS from "../../utils/paths";
-import * as USER_HELPERS from "../../utils/userToken";
+import { useNavigate } from "react-router-dom";
 import { getAllOrders } from "../../services/order";
 import "./orders.scss";
-import { Card, Col, Row } from 'antd';
-import "./order.scss";
+import { Card, Col, Row, Layout, Breadcrumb, Button } from "antd";
+
+const { Content } = Layout;
 
 
 
-export default function SEEALLORDERS({ authenticate }) {
-  const [error, setError] = useState(null);
+
+export default function SEEALLORDERS( props) {
   const navigate = useNavigate();
   const [orderList, setOrderList] = useState([]);
 
@@ -29,28 +27,43 @@ export default function SEEALLORDERS({ authenticate }) {
   }, []);
 
         return(
-<div className="site-card-wrapper">
-<Row gutter={16}>
-  <Col span={8}>
-  {
-
-  orderList===[] ? <div>CARGANDO</div>:
-
-  orderList.map((order,indx) =>
- <Card key={indx}>
+          <Content style={{ padding: "30px 50px 0 50px " }}>
+          <div className="site-layout-content-mp">
+          <div className="fondo">
+            <Breadcrumb style={{ margin: "6vh 0" }}></Breadcrumb>
+            <Row gutter={16}>
+            {orderList===[] ? <div>CARGANDO</div>:
+orderList.map((order,indx) =>{
+                    const onClickBut=(e)=>{
+                      e.preventDefault()
+                      navigate(`/order-detail/${order._id}`)
+                    }
+                    return (
+                      <Col key={indx} span={6}>
+                         <Card>
     <h2>{order.orderNumber}</h2>
     <h3>{order.client.custumername}</h3>
-    {order.product.map((product, indx)=>
-    <div key ={indx}>
-      <h4>{product.claveProduct}</h4>
+    {
+    order.products.map((product, indx)=>
+
+      product.claveProduct &&
+      <div key ={indx}>
+      <h4>{product.claveProduct.clave}</h4>
     </div>
     )}
     <h5>{order.status}</h5>
-    <Link className="event-button" exact to={`/order/${order._id}`} type="button" >Detalle de orden</Link>
-  </Card>
-                  )
-  }
-  </Col>
-</Row>
-</div>            
+                        <Button
+                        type="primary"
+                        onClick= {onClickBut}
+                      > Detalle de la orden.</Button>
+                        </Card>
+                     </Col>
+                    );
+                  })
+                }
+            </Row>
+          </div>
+        </div>
+        </Content>    
                   )}  
+

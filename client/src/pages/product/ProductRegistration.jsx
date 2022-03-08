@@ -72,7 +72,6 @@ export default function SEEPRODUCTDETAIL(props) {
     event.preventDefault();
     let oldFormSelecPorc = MP;
     let valuePor = Number(event.target.value);
-    console.log("valuePor", valuePor);
     oldFormSelecPorc[index].porcentaje = valuePor;
     return setForm({ ...form, MP: oldFormSelecPorc });
   }

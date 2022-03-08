@@ -70,8 +70,6 @@ exports.createProduct = async (req, res) => {
             author:author
           })
           .then(async (product) => {
-
-            console.log("PRODUCT",product)
             //MP updated        
                  product.MP.map(async (data, indx) => {
                   await PrimeMateria.findByIdAndUpdate(

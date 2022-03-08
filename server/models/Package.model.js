@@ -24,7 +24,11 @@ const packageSchema = new Schema(
 
     capacity:{
         type:Number
-    }
+    },
+    orders:[{
+      type: Schema.ObjectId,
+      ref: "Order"
+    }],
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

@@ -33,6 +33,10 @@ const productSchema = new Schema(
       type: Schema.ObjectId,
       ref: "Product"
     }],
+    orders:[{
+      type: Schema.ObjectId,
+      ref: "Order"
+    }],
     author:{
       type: Schema.Types.ObjectId,
       ref: "User"

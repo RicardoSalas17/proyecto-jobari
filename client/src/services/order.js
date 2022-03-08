@@ -7,6 +7,7 @@ function internalServerError(err) {
     return {
       status: false,
       errorMessage: err.response.data.errorMessage,
+      errstatus:err.response.status
     };
   }
   return {
@@ -22,6 +23,13 @@ function successStatus(res) {
   };
 }
 
+const authorization =  {
+  headers: {
+    Authorization: USER_HELPERS.getUserToken(),
+  }
+}
+
+
 // creates a basic url for every request in this file
 const orderService = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}/order`,
@@ -29,21 +37,21 @@ const orderService = axios.create({
 
 export function regisOrder(credentials) {
   return orderService
-    .post("/new-order", credentials)
+    .post("/new-order", credentials, authorization)
     .then(successStatus)
     .catch(internalServerError);
 }
 
 export function getAllOrders() {
   return orderService
-    .get("/get-allorders")
+    .get("/get-allorders", authorization)
     .then(successStatus)
     .catch(internalServerError);
 }
 
 export function getOrder(id) {
   return orderService
-    .get(`/order-detail/${id}`)
+    .get(`/order-detail/${id}`, authorization)
     .then(successStatus)
     .catch(internalServerError);
 }

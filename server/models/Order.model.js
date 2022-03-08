@@ -11,21 +11,28 @@ const orderSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Custumer"
     },
-    product:{
-        type: Array
+    products:[
+     {claveProduct: {
+      type: Schema.ObjectId,
+      ref: "Product"
     },
-
-    lote:{
-        type: String
+    package: {
+      type: Schema.ObjectId,
+      ref: "Package"
     },
-    monto:{
-        type:Number
+    cantidad:{
+      type:Number
     },
-    dateUP:{
-        type:Number
-    },
-    autor:{
-        type:String
+    amount:{
+      type:Number
+    }}
+  ],
+    total:{
+      type:Number
+  },
+  author:{
+      type: Schema.Types.ObjectId,
+      ref: "User"
     },
     status:{
       type:String

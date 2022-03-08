@@ -39,11 +39,11 @@ const userSchema = new Schema(
       type: Schema.ObjectId,
       ref: "Product"
     }],
-    ordenes:[{
+    orders:[{
       type: Schema.ObjectId,
       ref: "Order"
     }],
-    empaques:[{
+    package:[{
       type: Schema.ObjectId,
       ref: "Package"
     }],

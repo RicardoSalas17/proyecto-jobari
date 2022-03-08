@@ -1,52 +1,68 @@
 import React, { useState, useEffect } from "react";
-import { regisOrder } from "../../services/order";
-import { useNavigate, Link, useParams } from "react-router-dom";
-import * as PATHS from "../../utils/paths";
-import * as USER_HELPERS from "../../utils/userToken";
+import {  useParams } from "react-router-dom";
 import { getOrder } from "../../services/order";
+import { Col, Row, Skeleton, Layout, Breadcrumb } from 'antd';
 import "./orders.scss";
-import { Card, Col, Row } from 'antd';
+const { Content } = Layout;
 
-
-export default function SEEORDERDETAIL({ authenticate }) {
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
+export default function SEEOORDERDETAIL(props) {
   const [orderData, setOrderData] = useState({});
-  const { id} = useParams()
-  
-  const getALLORDERS = async () => {
-     // console.log("soy el id",id)
-    //  const { id } = props.match.params
-   getOrder(id)
+  const {id} = useParams()
+
+  const getOneOrder = async () => {
+     getOrder(id)
       .then((res) => {
           const data = res.data
-        return setOrderData(data)
-     //  console.log("data",data)
+         return setOrderData(data)
       })
       .catch((err) => console.log(err));
   };
+
   useEffect(() => {
-    getALLORDERS()
-    //console.log("data",orderData)
-  }, []);
+    getOneOrder()
+  },[]);
 
         return(
-<div className="site-card-wrapper">
+        <Content style={{ padding: "30px 50px 0 50px " }}>
+      <div className="site-layout-content">
+      <Row>
+      <Col span={24}>
+            <h1>Detalle de la orden</h1>
+          </Col>
+          </Row>
+      <Row className="for">
+        <Breadcrumb style={{ margin: "6vh 0" }}></Breadcrumb>
 
-{console.log("orderssss",orderData)}
+        {!orderData.orderNumber ?
+            <Col className="formAuth" span={24}>
+          <Skeleton></Skeleton>
+          </Col>
+          :
+          <Col className="formAuth" span={24}>
+        <h2>Numero de Orden: {orderData.orderNumber}</h2>
+        <h2>Cliente: {orderData.client.custumername}</h2>
+        {
+    orderData.products.map((product, indx)=>
+     product.claveProduct &&
+      <div key ={indx}>
+      <h2>Prducto:</h2>
+      <h3>{product.claveProduct.name}</h3>
+      <h3>{product.claveProduct.clave}</h3>
+      <h2>Cantidad:</h2>
+      <h3>{product.cantidad} kg</h3>
+      <h2>Empaque:</h2>
+      <h3>{product.package.name}</h3>
+      <h3>{product.package.clave}</h3>
+      <h2>Monto:</h2>
+      <h3>${product.amount}</h3>
+    </div>
+    )
+    
+    }
+<h2>Total: ${orderData.total}</h2>
+          </Col>}
+        </Row>
+      </div>
+    </Content>
+                 )}
 
-{!orderData.client?
-<div>cargando...</div> :
-<div>
-<h2>{orderData.orderNumber}</h2>
-<h3>{orderData.client.custumername}</h3>
-{orderData.product.map((product, indx)=>
-<div key ={indx}>
-  <h4>{product.claveProduct}</h4>
-</div>
-)}
-<h5>{orderData.status}</h5>
-</div>
-}
-</div>
-                  )}  

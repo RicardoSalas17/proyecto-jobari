@@ -31,7 +31,7 @@ exports.createPackage = async (req, res) => {
               //USER updated
               const userUpdated = await User.findByIdAndUpdate(
                 author,
-                { $push: { productos: packages._id } },
+                { $push: { package: packages._id } },
                 { new: true }
               )
               
