@@ -19,7 +19,7 @@ const Navbar = (props) => {
             </Link>
               </Menu.Item>
       <SubMenu className="subM"  key="sub1" title="Clientes">
-            <Menu.Item   key="1">
+            <Menu.Item className="ButSubM"  key="1">
               <Link className="link-style" to={PATHS.NEWCUSTUMER} >
               Nuevo cliente
               </Link>

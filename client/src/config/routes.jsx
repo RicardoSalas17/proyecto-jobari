@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import HomePage from "../pages/HomePage";
+import HomePage from "../pages/home/HomePage";
 import HomePageInfo from "../pages/infoPages/HomeInfo"
 //AUTH
 import Login from "../pages/auth/LogIn";
@@ -24,10 +24,10 @@ import SEEPACKAGESDETAIL from "../pages/packages/PackagesDetail"
 import NEWORDER from "../pages/orders/OrderRegistration"
 import SEEALLORDERS from "../pages/orders/OrdersView"
 import SEEORDERDETAIL from "../pages/orders/OrderDetail"
-//ROUTES
-import NEWROUTE from "../pages/RouteRegistreation"
-import SEECALENDAR from "../pages/CalendarView"
-import SEEROUTEDETAIL from "../pages/RouteDetail"
+//Logistic
+import NEWROUTE from "../pages/logistic/RouteRegistreation"
+import SEECALENDARLOGISTIC from "../pages/logistic/RoutesCalendarView"
+import SEEROUTEDETAIL from "../pages/logistic/RouteDetail"
 
 import * as PATHS from "../utils/paths";
 import React from 'react'
@@ -185,7 +185,7 @@ const routes = (props) => {
     {
       path: PATHS.SEECALENDAR,
       element: user ? (
-        <SEECALENDAR {...props} />
+        <SEECALENDARLOGISTIC {...props} />
       ) : (
         <Navigate to={PATHS.LOGINPAGE} replace />
       )

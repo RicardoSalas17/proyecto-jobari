@@ -118,7 +118,7 @@ else{
             showConfirmButton: false,
             timer: 1500
     })
-            navigate(`${PATHS.SEEALLPRODUCTS}/${res.data.custumer._id}`);
+            navigate(`${PATHS.SEECUSTUMERDETAILPAS}/${res.data.custumer._id}`);
           }
        });
       } else if (result.isDenied) {

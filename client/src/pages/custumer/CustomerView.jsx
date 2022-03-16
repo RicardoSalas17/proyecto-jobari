@@ -22,7 +22,7 @@ export default function SEEALLCUSTUMER() {
 
   return (
     <Content style={{ padding: "30px 50px 0 50px " }}>
-      <div className="site-layout-content">
+      <div className="site-layout-contents">
       <div className="fondo">
         <Breadcrumb style={{ margin: "6vh 0" }}></Breadcrumb>
         <Row gutter={16}>

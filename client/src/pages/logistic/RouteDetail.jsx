@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { regisOrder } from "../services/order";
+import { regisOrder } from "../../services/order";
 import { useNavigate, Link, useParams } from "react-router-dom";
-import * as PATHS from "../utils/paths";
-import * as USER_HELPERS from "../utils/userToken";
-import { getRoute } from "../services/routes";
+import * as PATHS from "../../utils/paths";
+import * as USER_HELPERS from "../../utils/userToken";
+import { getRoute } from "../../services/routes";
 
 import { Card, Col, Row, Skeleton } from 'antd';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";

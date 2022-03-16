@@ -1,13 +1,15 @@
-import {  Calendar, Badge, Button  } from 'antd';
+import {  Calendar, Badge, Breadcrumb  } from 'antd';
 import {  PlusOutlined } from '@ant-design/icons';
+
 import React, {
   useState,
   useEffect,
 } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import * as PATHS from "../utils/paths";
-import { getAllRoutes } from "../services/routes";
+import * as PATHS from "../../utils/paths";
+import { getAllRoutes } from "../../services/routes";
+import "./logistic.scss"
 
 
 
@@ -26,7 +28,6 @@ const obtainRoutes = async () => {
 useEffect(() => {
   obtainRoutes();
 }, []);
-
 
     function getListData(value) {
         let listData;
@@ -72,10 +73,12 @@ useEffect(() => {
       }
       
           return(
-<div>
-<Link to={PATHS.NEWROUTE}>Nueva ruta
+<div className='calendar'>
+<Breadcrumb style={{ margin: '8vh 0 2vh 0', padding:"8vh 0 0 0" }}>
+        <Breadcrumb.Item><Link to={PATHS.NEWROUTE}>Nueva ruta
 <PlusOutlined />
-</Link>
+</Link></Breadcrumb.Item>
+</Breadcrumb>
 <Calendar dateCellRender={dateCellRender} onSelect={onSelect}/>,
 </div>
           )}

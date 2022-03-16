@@ -13,6 +13,7 @@ exports.createOrder = async (req, res) => {
         products,
         author
               } = req.body
+              let cont = true
 if(orderNumber===""||client===""|| products[0].claveProduct=== 0 || products[0].cantidad === 0 ||products[0].package=== 0|| products[0].amount===0 )
 { cont = false
   return res.status(400).json({ errorMessage: "Por favor, llena todos los campos."});}
@@ -48,7 +49,7 @@ const gettingIDs=(setData)=> {
  return [setData[0]]
 }
 
-let cont = true
+
 let productID = ""
 let total = 0
 if(products.length === 1 && products[0].claveProduct===0&&products[0].cantidad === 0&&products[0].package === ""&&products[0].amount === 0) {

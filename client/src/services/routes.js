@@ -7,6 +7,7 @@ function internalServerError(err) {
     return {
       status: false,
       errorMessage: err.response.data.errorMessage,
+      errstatus:err.response.status
     };
   }
   return {
@@ -27,22 +28,27 @@ const routeService = axios.create({
   baseURL: `${process.env.REACT_APP_SERVER_URL}/route`,
 });
 
+const authorization =  {
+  headers: {
+    Authorization: USER_HELPERS.getUserToken(),
+  }}
+
 export function regisRoute(credentials) {
   return routeService
-    .post("/new-route", credentials)
+    .post("/new-route", credentials, authorization)
     .then(successStatus)
     .catch(internalServerError);
 }
 export function getAllRoutes() {
   return routeService
-    .get("/get-routes")
+    .get("/get-routes", authorization)
     .then(successStatus)
     .catch(internalServerError);
 }
 
 export function getRoute(id) {
   return routeService
-    .get(`/route-detail/${id}`)
+    .get(`/route-detail/${id}`, authorization)
     .then(successStatus)
     .catch(internalServerError);
 }

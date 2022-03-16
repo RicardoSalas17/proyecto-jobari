@@ -36,12 +36,13 @@ ul{
   width: 90% !important;
   background: #e49494 !important;
   display: flex !important;
-  justify-content:end !important;
+  justify-content:flex-end !important;
 }
 
 li{
   display: flex !important;
   align-items: center !important;
+  background: #e49494 !important;
 }
 
 li:hover{
@@ -58,4 +59,7 @@ li:hover{
 .ant-menu-item-selected{
   background-color: #dd2828  !important;  
 }
+}
+.ButSubM{
+  background-color: #e49494 !important;
 }

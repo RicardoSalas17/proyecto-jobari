@@ -146,8 +146,9 @@ export default function Oder(props) {
               showConfirmButton: false,
               timer: 1500,
             });
-             navigate(PATHS.SEEALLORDERS);
-            //navigate(`${PATHS.SEEALLPRODUCTS}/${res.data.custumer._id}`);
+             //navigate(PATHS.SEEALLORDERS);
+
+            navigate(`${PATHS.SEEORDERDETAILPAS}/${res.data.order._id}`);
           }
         });
       } else if (result.isDenied) {
